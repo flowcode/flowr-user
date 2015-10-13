@@ -1,0 +1,35 @@
+{
+    "name" : "flowcode/userbundle",
+    "description" : "user bundle",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Francisco Memoli",
+        "email" : "fmemoli@flowcode.com.ar"
+    },
+    {
+        "name" : "Juan Manuel Agüero",
+        "email" : "jaguero@flowcode.com.ar"
+    }],
+    "keywords" : [
+        "user bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Flowcode\\UserBundle" : ""
+        }
+    },
+    "target-dir" : "Flowcode/UserBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "1.0.0-dev"
+        }
+    }
+}
