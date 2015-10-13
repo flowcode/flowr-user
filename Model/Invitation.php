@@ -1,6 +1,6 @@
 <?php
 
-namespace Flower\UserBundle\Entity;
+namespace Flower\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Juan Manuel Agüero <jaguero@flowcode.com.ar>
  * @author Francisco Memoli <fmemoli@flowcode.com.ar>
  */
-class Invitation
+abstract class Invitation
 {
 
     /** @ORM\Id @ORM\Column(type="string", length=6) */

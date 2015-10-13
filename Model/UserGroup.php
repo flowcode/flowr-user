@@ -1,6 +1,6 @@
 <?php
 
-namespace Flower\UserBundle\Entity;
+namespace Flower\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\Group as BaseGroup;
@@ -10,7 +10,8 @@ use FOS\UserBundle\Model\Group as BaseGroup;
  * @author Juan Manuel Agüero <jaguero@flowcode.com.ar>
  * @author Francisco Memoli <fmemoli@flowcode.com.ar>
  */
-class UserGroup extends BaseGroup
+abstract class UserGroup extends BaseGroup
+
 {
 
     /**

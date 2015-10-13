@@ -1,6 +1,6 @@
 <?php
 
-namespace Flower\UserBundle\Entity;
+namespace Flower\UserBundle\Model;
 
 use DateTime;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Juan Manuel Agüero <jaguero@flowcode.com.ar>
  * @author Francisco Memoli <fmemoli@flowcode.com.ar>
  */
-class User extends BaseUser
+abstract class User extends BaseUser
 {
     /**
      * @var integer
