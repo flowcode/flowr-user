@@ -1,5 +1,5 @@
 {
-    "name" : "flowcode/userbundle",
+    "name" : "flower/userbundle",
     "description" : "user bundle",
     "type" : "symfony-bundle",
     "authors" : [{
@@ -21,10 +21,10 @@
     },
     "autoload" : {
         "psr-0" : {
-            "Flowcode\\UserBundle" : ""
+            "Flower\\UserBundle" : ""
         }
     },
-    "target-dir" : "Flowcode/UserBundle",
+    "target-dir" : "Flower/UserBundle",
     "repositories" : [{
     }],
     "extra" : {
