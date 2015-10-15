@@ -35,14 +35,14 @@ abstract class User extends BaseUser
      *
      * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
-    private $firstname;
+    protected $firstname;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
-    private $lastname;
+    protected $lastname;
 
     /**
      * @ORM\OneToOne(targetEntity="Invitation")
@@ -64,21 +64,21 @@ abstract class User extends BaseUser
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created", type="datetime")
      */
-    private $created;
+    protected $created;
 
     /**
      * @var string
      *
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
-    private $apiToken;
+    protected $apiToken;
 
     /**
      * @var DateTime
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated", type="datetime")
      */
-    private $updated;
+    protected $updated;
 
     public function __construct()
     {
@@ -267,39 +267,6 @@ abstract class User extends BaseUser
     public function getGroups()
     {
         return $this->groups;
-    }
-
-    /**
-     * Add events
-     *
-     * @param \Flower\UserBundle\Entity\Event $events
-     * @return User
-     */
-    public function addEvent(\Flower\UserBundle\Entity\Event $events)
-    {
-        $this->events[] = $events;
-
-        return $this;
-    }
-
-    /**
-     * Remove events
-     *
-     * @param \Flower\UserBundle\Entity\Event $events
-     */
-    public function removeEvent(\Flower\UserBundle\Entity\Event $events)
-    {
-        $this->events->removeElement($events);
-    }
-
-    /**
-     * Get events
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEvents()
-    {
-        return $this->events;
     }
 
     /**
