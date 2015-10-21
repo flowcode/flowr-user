@@ -1,0 +1,20 @@
+{% extends ':Email:layout.html.twig' %}
+{% block subject %}Invitación para registrarte{% endblock %}
+
+ {% block body %}
+	<table class=""  id="element4" style="">
+		<tbody>
+			<tr>
+				<td  style="">
+					Este es tu código de invitación: {{ code }}
+				</td>
+			</tr>
+			<tr>
+				<td  style="">
+					Para ingresar al sistema sigue al siguiente link:<a href="{{host_scheme}}://{{host_host}}{{host_base_url}}{{path('fos_user_registration_register')}}">{{host_scheme}}://{{host_host}}{{host_base_url}}{{path('fos_user_registration_register')}}</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+												
+{% endblock %}
