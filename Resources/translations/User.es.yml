@@ -1,0 +1,30 @@
+'%entity%': 'Usuario'
+'%entity% creation': 'Creación de Usuario'
+'%entity% edit': 'Edición de Usuario'
+'%entity% list': 'Lista de Usuarios'
+Actions: Acciones
+'Confirm delete': 'Confirmar borrado'
+Create: Crear
+'Create a new %entity%': 'Crear nuevo %entity%'
+Created: Creado
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Email: Email
+Enabled: Habilitado
+Firstname: Nombre
+Id: Id
+Invite: Invitar
+'Invite user': 'Invitar usuario'
+Lastlogin: 'Ultimo logeo'
+Lastname: Apellido
+'New %entity%': 'Nuevo %entity%'
+'No': 'No'
+Updated: Actualizado
+Username: Username
+'Yes': Si
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+edit: editar
+'send invite': 'send invite'
+show: ver
+'this procedure is irreversible': 'esta accion será irreversible'

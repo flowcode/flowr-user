@@ -1,0 +1,52 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }} - {{ parent() }}{% endblock %}
+{% block body %}
+    <section class="content-header">
+        <h1>{{ '%entity% list'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }}</h1>
+    </section>
+    <section class="content">    
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title"></h3>
+                <div class="box-tools pull-right">                    <a class="btn btn-default" href={{ path('usergroup_new') }}>
+                        <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }}
+                    </a>
+                            </div>
+            </div>
+            <div class="box-body">    
+            <table class="table table-striped table-hover table-bordered records_list">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">{{ 'Actions'|trans({}, 'UserGroup') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usergroup in paginator %}
+                        <tr>
+                            <td><a href="{{ path('usergroup_show', {id: usergroup.id}) }}">{{ usergroup.id }}</a></td>
+                            <td>
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" href="{{ path('usergroup_show', {id: usergroup.id}) }}">
+                                <i class="fa fa-file-o"></i> {{ 'show'|trans({}, 'UserGroup') }}
+                            </a>
+                            <a class="btn btn-default btn-sm" href="{{ path('usergroup_edit', {id: usergroup.id}) }}">
+                                <i class="fa fa-edit"></i> {{ 'edit'|trans({}, 'UserGroup') }}
+                            </a>
+                        </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {{ knp_pagination_render(paginator) }}
+            </div>
+        <div class="box-footer">
+
+        </div>
+        
+    </section>        
+
+{% endblock %}

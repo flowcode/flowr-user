@@ -1,0 +1,44 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            <a href={{ path('usergroup') }}>
+                {{ '%entity% list'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }}
+                /
+                {{ '%entity% creation'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }}
+            </a>
+        </h1>
+    </section>        
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                {{ form_start(form, {action: path('usergroup_create')}) }}
+                {{ form_widget(form) }}
+
+                {%if roles is defined %}
+                    <select multiple>
+                        {%for rol,rol_name in roles%}
+                            <option value="{{rol}}">{{rol_name}}</option>
+                        {%endfor%}
+                    </select>
+                {%endif%}
+
+                <p>
+                    <button class="btn btn-primary" type="submit">{{ 'Create'|trans({}, 'UserGroup') }}</button>
+                </p>
+                {{ form_end(form) }}
+            </div>
+            <div class="box-footer">
+
+                <div class="btn-group record_actions">
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
