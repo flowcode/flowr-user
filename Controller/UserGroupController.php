@@ -13,7 +13,7 @@ use Flower\UserBundle\Form\Type\UserGroupType;
 /**
  * UserGroup controller.
  *
- * @Route("/usergroup")
+ * @Route("/admin/usergroup")
  */
 class UserGroupController extends Controller
 {
@@ -62,7 +62,7 @@ class UserGroupController extends Controller
     public function newAction()
     {
         $usergroup = new UserGroup();
-        $form = $this->createForm(new UserGroupType(), $usergroup);
+        $form = $this->createForm($this->get("form.type.usergroup"), $usergroup);
 
         return array(
             'usergroup' => $usergroup,
@@ -80,7 +80,7 @@ class UserGroupController extends Controller
     public function createAction(Request $request)
     {
         $usergroup = new UserGroup();
-        $form = $this->createForm(new UserGroupType(), $usergroup);
+        $form = $this->createForm($this->get("form.type.usergroup"), $usergroup);
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($usergroup);
@@ -167,16 +167,10 @@ class UserGroupController extends Controller
      */
     private function createEditForm(UserGroup $entity)
     {
-        $form = $this->createForm(new UserGroupType(), $entity, array(
+        $form = $this->createForm($this->get("form.type.usergroup"), $entity, array(
             'action' => $this->generateUrl('usergroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-        $form->add('roles', 'choice', array(
-            'choices' => $this->get('flower.security.roles')->getRoles(),
-            'multiple' => true,
-            'label' => 'Roles'
-                )
-        );
 
         return $form;
     }

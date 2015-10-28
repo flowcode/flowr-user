@@ -5,9 +5,13 @@ namespace Flower\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
+use Flower\ModelBundle\Service\RoleService;
 class UserGroupType extends AbstractType
-{
+{   
+    public function __construct(RoleService $roleService)
+    {
+        $this->roleService = $roleService;
+    }
 
     /**
      * {@inheritdoc}
@@ -16,7 +20,12 @@ class UserGroupType extends AbstractType
     {
         $builder
                 ->add('name')
-
+                ->add('roles', 'choice', array(
+                'choices' => $this->roleService->getRoles(),
+                'multiple' => true,
+                'label' => 'Roles'
+                    )
+            )
         ;
     }
 

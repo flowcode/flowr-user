@@ -4,7 +4,8 @@
 
 {% block body %}
     <section class="content-header">
-        <h1>
+        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans}}</a>
+            /
             <a href={{ path('user') }}>
                 {{ '%entity% list'|trans({'%entity%': 'User'}, 'User') }}
             </a>

@@ -2,3 +2,8 @@ services:
 #    flower_core.example:
 #        class: Flower\CoreBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+    form.type.usergroup:
+        class: Flower\UserBundle\Form\Type\UserGroupType
+        arguments: ["@flower.security.roles"]
+        tags:
+            - { name: form.type, alias: event_type }   

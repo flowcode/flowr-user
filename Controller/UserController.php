@@ -16,7 +16,7 @@ use Flower\UserBundle\Form\Type\UserProfileType;
 /**
  * User controller.
  *
- * @Route("/user")
+ * @Route("/admin/user")
  */
 class UserController extends Controller
 {
@@ -228,20 +228,7 @@ class UserController extends Controller
         ;
     }
 
-    /**
-     * Lists all User entities.
-     *
-     * @Route("/avatar", name="user_avatar")
-     * @Method("GET")
-     * @Template()
-     */
-    public function avatarAction()
-    {
-        $hash = md5(strtolower(trim($this->getUser()->getEmail())));
-        return array(
-            'hash' => $hash,
-        );
-    }
+
 
     /**
      * Lists all User entities.
@@ -294,58 +281,6 @@ class UserController extends Controller
         return array(
             'error' => $error,
             'email' => $email,
-        );
-    }
-
-    /**
-     * Displays a form to edit an existing User entity.
-     *
-     * @Route("/profile", name="user_profile")
-     * @Method("GET")
-     * @Template()
-     */
-    public function profileAction()
-    {
-        $user = $this->getUser();
-        $editForm = $this->createForm(new UserProfileType(), $user, array(
-            'action' => $this->generateUrl('user_profile_update', array('id' => $user->getid())),
-            'method' => 'PUT',
-        ));
-        $deleteForm = $this->createDeleteForm($user->getId(), 'user_delete');
-
-        return array(
-            'user' => $user,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing User entity.
-     *
-     * @Route("/profileUpdate", name="user_profile_update")
-     * @Method("PUT")
-     * @Template("FlowerUserBundle:User:profile.html.twig")
-     */
-    public function updateProfileAction(Request $request)
-    {
-        $user = $this->getUser();
-        $editForm = $this->createForm(new UserProfileType(), $user, array(
-            'action' => $this->generateUrl('user_profile_update', array('id' => $user->getid())),
-            'method' => 'PUT',
-        ));
-        if ($editForm->handleRequest($request)->isValid()) {
-            $userManager = $this->container->get('fos_user.user_manager');
-            $userManager->updateUser($user);
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'Perfil actualizado!');
-
-            return $this->redirect($this->generateUrl('user_profile', array('id' => $user->getId())));
-        }
-        return array(
-            'user' => $user,
-            'edit_form' => $editForm->createView(),
         );
     }
 
