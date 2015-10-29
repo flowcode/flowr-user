@@ -1,4 +1,4 @@
-'%entity%': 'Usuario'
+'%entity%': Usuario
 '%entity% creation': 'Creación de Usuario'
 '%entity% edit': 'Edición de Usuario'
 '%entity% list': 'Lista de Usuarios'
@@ -13,6 +13,7 @@ Edit: Editar
 Email: Email
 Enabled: Habilitado
 Firstname: Nombre
+Groups: Grupos
 Id: Id
 Invite: Invitar
 'Invite user': 'Invitar usuario'

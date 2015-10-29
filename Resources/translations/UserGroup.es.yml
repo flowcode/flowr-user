@@ -1,16 +1,18 @@
 '%entity%': '%entity%'
-'%entity% creation': 'Creación de %entity%'
-'%entity% edit': 'Edición de %entity%'
-'%entity% list': 'Lista de %entity%'
+'%entity% creation': 'Creación de Grupode Usuario'
+'%entity% edit': 'Edición de Grupo de Usuario'
+'%entity% list': 'Lista de Grupo de Usuarios'
 Actions: Acciones
 'Confirm delete': 'Confirmar borrado'
 Create: Create
-'Create a new %entity%': 'Crear nuevo %entity%'
+'Create a new %entity%': 'Crear nuevo Grupo de Usuario'
 Delete: Borrar
 'Do you want to proceed?': '¿Desea continuar de todos modos?'
 Edit: Edit
 Id: Id
+Name: Nombre
 'No': 'No'
+Roles: Roles
 UserGroup: 'Grupo de usuarios'
 'Yes': Si
 'You are about to delete an item': 'Usted esta por borrar un elemento'
