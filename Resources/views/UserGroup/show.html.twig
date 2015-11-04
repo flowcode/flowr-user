@@ -59,6 +59,20 @@
                         <tr>
                             <th scope="row">{{'Id'|trans({}, 'UserGroup')}}</th>
                             <td>{{ usergroup.id }}</td>
+                            <tr>
+                                <th scope="row">{{'Name'|trans({}, 'UserGroup')}}</th>
+                                <td>
+                                    {{ usergroup.name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">{{'Roles'|trans({}, 'UserGroup')}}</th>
+                                <td>
+                                    {% for item in usergroup.roles %}
+                                        {{item}},
+                                {% endfor %}
+                            </tr>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -71,3 +85,4 @@
     </section>
 
 {% endblock %}
+

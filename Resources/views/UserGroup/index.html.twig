@@ -24,6 +24,7 @@
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">{{'Name'|trans({}, 'UserGroup')}}</th>
+                            <th scope="col">{{'Roles'|trans({}, 'UserGroup')}}</th>
                             <th scope="col">{{ 'Actions'|trans({}, 'UserGroup') }}</th>
                         </tr>
                     </thead>
@@ -32,6 +33,9 @@
                             <tr>
                                 <td><a href="{{ path('usergroup_show', {id: usergroup.id}) }}">{{ usergroup.id }}</a></td>
                                 <td>{{usergroup.name}}</td>
+                                <td>{% for item in usergroup.roles %}
+                                        {{item}},
+                                {% endfor %}</td>
                                 <td>
                             <div class="btn-group">
                                 <a class="btn btn-link  btn-sm" href="{{ path('usergroup_show', {id: usergroup.id}) }}">
