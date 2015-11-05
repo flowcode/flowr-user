@@ -44,7 +44,10 @@ class ProfileController extends Controller
      */
     public function avatarAction()
     {
-        $hash = md5(strtolower(trim($this->getUser()->getEmail())));
+        $hash ="";
+        if($this->getUser()){
+            $hash = md5(strtolower(trim($this->getUser()->getEmail())));
+        }
         return array(
             'hash' => $hash,
         );
