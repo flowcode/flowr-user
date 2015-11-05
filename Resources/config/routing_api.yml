@@ -1,0 +1,3 @@
+flower_api_user_notifications_findall:
+    path:     /notifications
+    defaults: { _controller: FlowerUserBundle:Api/Notification:myNotifications }

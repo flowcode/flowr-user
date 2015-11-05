@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Flower\UserBundle\Controller;
 
@@ -100,5 +100,20 @@ class ProfileController extends Controller
             'edit_form' => $editForm->createView(),
         );
     }
+
+    /**
+     * Edits an existing User entity.
+     *
+     * @Route("/notifications", name="user_profile_notifications")
+     * @Method("GET")
+     * @Template("FlowerUserBundle:User:notifications.html.twig")
+     */
+    public function notificationsAction(){
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $notifications = $em->getRepository("FlowerModelBundle:User\UserNotification")->findBy(array('user' => $user), array('created' => 'DESC'), 10, 0);
+        return array(
+            'notifications' => $notifications
+        );
+    }
 }
-?>
