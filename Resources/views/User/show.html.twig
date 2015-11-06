@@ -77,6 +77,10 @@
                             <td>{{ user.username }}</td>
                         </tr>
                         <tr>
+                            <th scope="row">{{'Initials'|trans({}, 'User')}}</th>
+                            <td>{{ user.initials }}</td>
+                        </tr>
+                        <tr>
                             <th scope="row">{{'Created'|trans({}, 'User')}}</th>
                             <td>{{ user.created|date('Y-m-d H:i:s') }}</td>
                         </tr>

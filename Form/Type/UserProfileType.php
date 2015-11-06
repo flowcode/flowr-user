@@ -18,6 +18,7 @@ class UserProfileType extends AbstractType
                 ->add('firstname')
                 ->add('lastname')
                 ->add('email')
+                ->add('initials')
                 ->add('plainPassword', 'password', array('required' => false))
         ;
     }

@@ -19,6 +19,7 @@ class UserType extends AbstractType
                 ->add('lastname')
                 ->add('email')
                 ->add('username')
+                ->add('initials')
                 ->add('plainPassword', 'password', array('required' => false))
 //                ->add('roles', 'choice', array(
 //                    'choices' => array("ROLE_USER" => "User", "ROLE_ADMIN" => "Admin"),

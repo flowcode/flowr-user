@@ -13,7 +13,7 @@ use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use JMS\Serializer\Annotation\Groups;
 /**
  * User
  * @author Juan Manuel Agüero <jaguero@flowcode.com.ar>
@@ -29,6 +29,14 @@ abstract class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="initials", type="string", length=255, nullable=true)
+     * @Groups({"kanban"})
+     */
+    protected $initials;
 
     /**
      * @var string
@@ -267,5 +275,23 @@ abstract class User extends BaseUser
     public function getApiToken()
     {
         return $this->apiToken;
+    }
+    /**
+    * Get initials
+    * @return String 
+    */
+    public function getInitials()
+    {
+        return $this->initials;
+    }
+    
+    /**
+    * Set initials
+    * @return String 
+    */
+    public function setInitials($initials)
+    {
+        $this->initials = $initials;
+        return $this;
     }
 }
