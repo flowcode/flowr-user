@@ -1,0 +1,4 @@
+flower_user_api_login:
+    path:     /login
+    defaults: { _controller: FlowerUserBundle:Api/Login:login }
+    methods: [POST]
