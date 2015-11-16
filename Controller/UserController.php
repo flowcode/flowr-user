@@ -87,6 +87,8 @@ class UserController extends Controller
         $user = new User();
         $form = $this->createForm(new UserType(), $user);
         if ($form->handleRequest($request)->isValid()) {
+            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager->updateUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -136,6 +138,8 @@ class UserController extends Controller
             'method' => 'PUT',
         ));
         if ($editForm->handleRequest($request)->isValid()) {
+            $userManager = $this->container->get('fos_user.user_manager');
+            $userManager->updateUser($user);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
