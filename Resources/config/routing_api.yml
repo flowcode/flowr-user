@@ -1,3 +1,15 @@
+
+flower_api_user_notifications_setviewed:
+    path:     /notifications/{id}/viewed
+    defaults: { _controller: FlowerUserBundle:Api/Notification:setViewed }
+    methods: [POST]
+
+flower_api_user_notifications_unreads:
+    path:     /notifications/unreads
+    defaults: { _controller: FlowerUserBundle:Api/Notification:unreadNotificationsCount }
+    methods: [GET]
+
 flower_api_user_notifications_findall:
     path:     /notifications
     defaults: { _controller: FlowerUserBundle:Api/Notification:myNotifications }
+    methods: [GET]

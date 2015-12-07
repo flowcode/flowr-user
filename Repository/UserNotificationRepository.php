@@ -12,5 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserNotificationRepository extends EntityRepository
 {
+    public function getUnreadsCount($userId){
 
+        $qb = $this->createQueryBuilder("n");
+
+        $qb->select("COUNT(n)");
+        $qb->where("n.user = :user_id")->setParameter("user_id", $userId);
+        $qb->andWhere("n.viewed = :read")->setParameter("read", false);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

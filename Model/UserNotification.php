@@ -19,6 +19,8 @@ abstract class UserNotification
     const type_task = 'task';
     const type_event = 'event';
     const type_project = 'project';
+    const type_contact_list = 'contact_list';
+    const type_campaign_email = 'campaign_email';
 
     /**
      * @var integer
@@ -187,7 +189,7 @@ abstract class UserNotification
 
     public function setViewed()
     {
-        $this->sent = true;
+        $this->viewed = true;
     }
 
     /**
