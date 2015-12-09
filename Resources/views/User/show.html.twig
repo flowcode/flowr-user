@@ -82,15 +82,15 @@
                         </tr>
                         <tr>
                             <th scope="row">{{'Created'|trans({}, 'User')}}</th>
-                            <td>{{ user.created|date('Y-m-d H:i:s') }}</td>
+                            <td>{{ user.created|date('fullDateTime'|trans) }}</td>
                         </tr>
                         <tr>
                             <th scope="row">{{'Updated'|trans({}, 'User')}}</th>
-                            <td>{{ user.updated|date('Y-m-d H:i:s') }}</td>
+                            <td>{{ user.updated|date('fullDateTime'|trans) }}</td>
                         </tr>
                         <tr>
                             <th scope="row">{{'Lastlogin'|trans({}, 'User')}}</th>
-                            <td>{{ user.lastLogin|date('Y-m-d H:i:s') }}</td>
+                            <td>{{ user.lastLogin|date('fullDateTime'|trans) }}</td>
                         </tr>
                         <tr>
                             <th scope="row">{{'Enabled'|trans({}, 'User')}}</th>

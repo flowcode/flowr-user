@@ -29,7 +29,7 @@
                             <tr>
                                 <td>{{ notification.type }}</td>
                                 <td>{{ notification.message }}</td>
-                                <td>{{ notification.created|date("m/d/Y") }}</td>
+                                <td>{{ notification.created|date("smallDate"|trans) }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

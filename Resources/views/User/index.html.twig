@@ -63,7 +63,7 @@
                                 <td>{{ user.lastname }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.username }}</td>
-                                <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                                <td>{% if user.lastLogin %}{{ user.lastLogin|date('fullDateTime'|trans) }}{% endif %}</td>
                                 <td>{% if user.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}</td>
                                 <td>
                                     <div class="btn-group">
