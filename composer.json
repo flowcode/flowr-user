@@ -17,7 +17,9 @@
         "MIT"
     ],
     "require" : {
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "stof/doctrine-extensions-bundle": "~1.1@dev",
+        "yavin/symfony-form-tree": "0.3"
     },
     "autoload" : {
         "psr-0" : {
