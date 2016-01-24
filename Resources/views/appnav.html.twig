@@ -1,0 +1,13 @@
+		<div class="nav-app">
+            <ul class="nav nav-tabs ">
+                <li role="presentation" class="app-icon bg-teal">
+                    <i class="ionicons ion-ios-people"></i>
+                </li>
+                <li role="presentation" 
+                {% if app_employee is defined %}class="active"{% endif %}
+                >
+                    <a href="{{ path('employee') }}">{{ '%entity% list'|trans({'%entity%': 'Employee'}, 'Employee') }}</a>
+                </li>
+
+            </ul>
+        </div>

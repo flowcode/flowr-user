@@ -1,0 +1,49 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}User - {{ parent() }}{% endblock %}
+
+{% block body %}
+
+    <section class="content">
+        {{ include("FlowerUserBundle::appnav.html.twig", { 'app_employee': true }) }}
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="box box-solid">
+                    <div class="box-body box-profile">
+                        <div class="text-center">
+                            {{ render(controller('FlowerUserBundle:Profile:avatar',{'user':user})) }}
+                        </div>
+                        <h3 class="profile-username text-center">{{ user.getHappyName()|title }}</h3>
+                        <h5 class="text-muted text-center">{{ user.orgPosition|title }}</h5>
+                        <hr>
+                        <strong>Email</strong>
+                        <p class="text-muted">
+                            {{ user.email }}
+                        </p>
+                        <hr>
+                        <strong>Phones</strong>
+                        <p class="text-muted"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-8">
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <h3 class="box-title">{{ 'Activity' }}</h3>
+                    </div>
+                    <div class="box-body">
+
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+{% endblock %}

@@ -42,10 +42,12 @@ class ProfileController extends Controller
      * @Method("GET")
      * @Template("FlowerUserBundle:User:avatar.html.twig")
      */
-    public function avatarAction()
+    public function avatarAction($user = null)
     {
         $hash ="";
-        if($this->getUser()){
+        if(!is_null($user)){
+            $hash = md5(strtolower(trim($user->getEmail())));
+        }elseif ($this->getUser()){
             $hash = md5(strtolower(trim($this->getUser()->getEmail())));
         }
         return array(
