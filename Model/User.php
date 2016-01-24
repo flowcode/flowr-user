@@ -68,6 +68,12 @@ abstract class User extends BaseUser
     protected $groups;
 
     /**
+     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\OrgPosition")
+     * @JoinColumn(name="position_id", referencedColumnName="id")
+     * */
+    protected $orgPosition;
+
+    /**
      * @var DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created", type="datetime")
@@ -294,4 +300,25 @@ abstract class User extends BaseUser
         $this->initials = $initials;
         return $this;
     }
+
+    /**
+     * Set orgPosition
+     *
+     * @param \Flower\ModelBundle\Entity\User\OrgPosition $orgposition
+     * @return User
+     */
+    public function setOrgPosition(\Flower\ModelBundle\Entity\User\OrgPosition $orgposition = null) {
+        $this->orgPosition = $orgposition;
+        return $this;
+    }
+
+    /**
+     * Get orgPosition
+     *
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
+     */
+    public function getOrgPosition() {
+        return $this->orgPosition;
+    }
+    
 }

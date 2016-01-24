@@ -54,4 +54,12 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 
+    public function findByOrgPositions($orgPositions = array()){
+        $qb = $this->createQueryBuilder('u')
+            ->where('u.orgPosition IN (:orgPositions)')
+            ->setParameter('orgPositions', $orgPositions);
+
+            return $qb->getQuery()->getResult();
+    }
+
 }

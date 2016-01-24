@@ -7,3 +7,21 @@ services:
         arguments: ["@flower.security.roles"]
         tags:
             - { name: form.type, alias: event_type }   
+
+
+    symfony.form.type.tree:
+           class: Yavin\Symfony\Form\Type\TreeType
+           arguments: [ "@property_accessor" ]
+           tags:
+               - { name: form.type, alias: y_tree }
+
+    symfony.form.type_guesser.tree:
+       class: Yavin\Symfony\Form\Type\TreeTypeGuesser
+       arguments: [ "@doctrine" ]
+       tags:
+           - { name: form.type_guesser }
+
+
+    user.service.orgposition:
+            class: Flower\UserBundle\Service\OrgPositionService
+            arguments: ['@service_container']

@@ -21,10 +21,14 @@ class UserType extends AbstractType
                 ->add('username')
                 ->add('initials')
                 ->add('plainPassword', 'password', array('required' => false, 'label' => "Password"))
-//                ->add('roles', 'choice', array(
-//                    'choices' => array("ROLE_USER" => "User", "ROLE_ADMIN" => "Admin"),
-//                    "multiple" => true
-//                ))
+                ->add('orgPosition', 'y_tree', array(
+                    'class' => "Flower\ModelBundle\Entity\User\OrgPosition",
+                    'orderFields' => array('root' => 'asc','lft' => 'asc'),
+                    'prefixAttributeName' => 'data-level-prefix',
+                    'treeLevelField' => 'lvl',
+                    'required' => false,
+                    'multiple' => false,
+                    'attr' => array("class" => "tall")))
                 ->add('groups', 'entity', array(
                     'class' => 'FlowerModelBundle:User\UserGroup',
                     'property' => 'name',

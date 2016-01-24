@@ -55,13 +55,13 @@ abstract class OrgPosition
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\OrgPosition", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\OrgPosition", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\OrgPosition", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\User\OrgPosition", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     protected $children;
@@ -88,7 +88,7 @@ abstract class OrgPosition
      * Set name
      *
      * @param string $name
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
     public function setName($name)
     {
@@ -111,7 +111,7 @@ abstract class OrgPosition
      * Set lft
      *
      * @param integer $lft
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
     public function setLft($lft)
     {
@@ -133,7 +133,7 @@ abstract class OrgPosition
      * Set rgt
      *
      * @param integer $rgt
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
     public function setRgt($rgt)
     {
@@ -155,7 +155,7 @@ abstract class OrgPosition
      * Set lvl
      *
      * @param integer $lvl
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
     public function setLvl($lvl)
     {
@@ -178,7 +178,7 @@ abstract class OrgPosition
      * Set root
      *
      * @param integer $root
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
     public function setRoot($root)
     {
@@ -199,10 +199,10 @@ abstract class OrgPosition
     /**
      * Set parent
      *
-     * @param \Flower\ModelBundle\Entity\OrgPosition $parent
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @param \Flower\ModelBundle\Entity\User\OrgPosition $parent
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
-    public function setParent(\Flower\ModelBundle\Entity\OrgPosition $parent = null)
+    public function setParent(\Flower\ModelBundle\Entity\User\OrgPosition $parent = null)
     {
         $this->parent = $parent;
         return $this;
@@ -211,7 +211,7 @@ abstract class OrgPosition
     /**
      * Get parent
      *
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
     public function getParent()
     {
@@ -221,10 +221,10 @@ abstract class OrgPosition
     /**
      * Add children
      *
-     * @param \Flower\ModelBundle\Entity\OrgPosition $children
-     * @return \Flower\ModelBundle\Entity\OrgPosition
+     * @param \Flower\ModelBundle\Entity\User\OrgPosition $children
+     * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
-    public function addChild(\Flower\ModelBundle\Entity\OrgPosition $children)
+    public function addChild(\Flower\ModelBundle\Entity\User\OrgPosition $children)
     {
         $this->children[] = $children;
         return $this;
@@ -233,9 +233,9 @@ abstract class OrgPosition
     /**
      * Remove children
      *
-     * @param \Flower\ModelBundle\Entity\OrgPosition $children
+     * @param \Flower\ModelBundle\Entity\User\OrgPosition $children
      */
-    public function removeChild(\Flower\ModelBundle\Entity\OrgPosition $children)
+    public function removeChild(\Flower\ModelBundle\Entity\User\OrgPosition $children)
     {
         $this->children->removeElement($children);
     }
