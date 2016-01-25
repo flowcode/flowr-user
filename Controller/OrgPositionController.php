@@ -33,12 +33,10 @@ class OrgPositionController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('FlowerModelBundle:User\OrgPosition')->createQueryBuilder('u');
-        $this->addQueryBuilderSort($qb, 'user');
-        $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
+        $entities = $em->getRepository('FlowerModelBundle:User\OrgPosition')->childrenHierarchy(null, false, array(), true);
 
         return array(
-            'paginator' => $paginator,
+            'entities' => $entities,
         );
     }
 
@@ -109,10 +107,10 @@ class OrgPositionController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function editAction(User $orgPosition)
+    public function editAction(OrgPosition $orgPosition)
     {
-        $editForm = $this->createForm(new UserType(), $orgPosition, array(
-            'action' => $this->generateUrl('user_update', array('id' => $orgPosition->getid())),
+        $editForm = $this->createForm(new OrgPositionType(), $orgPosition, array(
+            'action' => $this->generateUrl('admin_orgposition_update', array('id' => $orgPosition->getid())),
             'method' => 'PUT',
         ));
         $deleteForm = $this->createDeleteForm($orgPosition->getId(), 'user_delete');
@@ -131,18 +129,17 @@ class OrgPositionController extends Controller
      * @Method("PUT")
      * @Template("FlowerUserBundle:User:edit.html.twig")
      */
-    public function updateAction(User $orgPosition, Request $request)
+    public function updateAction(OrgPosition $orgPosition, Request $request)
     {
-        $editForm = $this->createForm(new UserType(), $orgPosition, array(
-            'action' => $this->generateUrl('user_update', array('id' => $orgPosition->getid())),
+        $editForm = $this->createForm(new OrgPositionType(), $orgPosition, array(
+            'action' => $this->generateUrl('admin_orgposition_update', array('id' => $orgPosition->getid())),
             'method' => 'PUT',
         ));
         if ($editForm->handleRequest($request)->isValid()) {
-            $orgPositionManager = $this->container->get('fos_user.user_manager');
-            $orgPositionManager->updateUser($orgPosition);
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $orgPosition->getId())));
+            return $this->redirect($this->generateUrl('admin_orgposition', array('id' => $orgPosition->getId())));
         }
         $deleteForm = $this->createDeleteForm($orgPosition->getId(), 'user_delete');
 

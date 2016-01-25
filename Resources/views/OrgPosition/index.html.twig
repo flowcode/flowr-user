@@ -1,6 +1,6 @@
 {% extends "FlowerCoreBundle::layout.html.twig" %}
 
-{% block title %}{{ '%entity% list'|trans({'%entity%': 'User'}, 'User') }} - {{ parent() }}{% endblock %}
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'OrgPosition'}, 'User') }} - {{ parent() }}{% endblock %}
 {% macro thead(name, field, label) %}
     {% spaceless %}
         {% set sort = app.session.get('sort.' ~ name) %}
@@ -24,7 +24,7 @@
         {% include 'FlowerCoreBundle:Default:admin_nav.html.twig' %}
         <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans}}</a>
             /
-            {{ '%entity% list'|trans({'%entity%': 'User'}, 'User') }}
+            {{ '%entity% list'|trans({'%entity%': 'OrgPosition'}, 'User') }}
         </h1>
 
     </section>
@@ -34,42 +34,14 @@
                 <h3 class="box-title"></h3>
                 <div class="box-tools pull-right">                    
                     <a class="btn btn-link  btn-sm" href={{ path('admin_orgposition_new') }}>
-                        <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'User'}, 'User') }}
+                        <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'OrgPosition'}, 'User') }}
                     </a>
                 </div>
             </div>
-            <div class="box-body">    
-                <table class="table table-hover records_list table-condensed">
-                    <thead>
-                        <tr>
-                            <th scope="col">{{ thead('user', 'id', 'Id') }}</th>
-                            <th scope="col">{{ thead('user', 'name', 'Name') }}</th>
-                            <th scope="col">{{ thead('user', 'parent', 'Parent') }}</th>
-                            <th scope="col">{{ 'Actions'|trans({}, 'User') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in paginator %}
-                            <tr>
-                                <td><a href="{{ path('admin_orgposition_show', {id: user.id}) }}">{{ user.id }}</a></td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.parent }}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a class="btn btn-link  btn-sm" href="{{ path('admin_orgposition_show', {id: user.id}) }}">
-                                            {{ 'show'|trans({}, 'User') }}
-                                        </a>
-                                        <a class="btn btn-link  btn-sm" href="{{ path('admin_orgposition_edit', {id: user.id}) }}">
-                                            {{ 'edit'|trans({}, 'User') }}
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                {{ knp_pagination_render(paginator) }}
+            <div class="box-body">
+                {% for entity in entities %}
+                {{ include('FlowerUserBundle:OrgPosition:orgposition_tree.html.twig',{ 'entities': entity.__children }) }}
+                {% endfor %}
             </div>
             <div class="box-footer">
 

@@ -1,0 +1,9 @@
+<ul>
+    {% for entity in entities %}
+        <li>
+            <span>{{ entity.name|title }}</span>
+            <a href="{{ path('admin_orgposition_edit', { 'id': entity.id }) }}">{{ "edit"|trans|title }}</a>
+            {{ include('FlowerUserBundle:OrgPosition:orgposition_tree.html.twig',{ 'entities': entity.__children }) }}
+        </li>
+    {% endfor %}
+</ul>

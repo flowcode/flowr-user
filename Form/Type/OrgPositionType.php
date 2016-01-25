@@ -16,7 +16,14 @@ class OrgPositionType extends AbstractType
     {
         $builder
                 ->add('name')
-                ->add('parent')
+                ->add('parent', 'y_tree', array(
+                    'class' => 'Flower\ModelBundle\Entity\User\OrgPosition',
+                    'orderFields' => array('root' => 'asc','lft' => 'asc'),
+                    'prefixAttributeName' => 'data-level-prefix',
+                    'treeLevelField' => 'lvl',
+                    'required' => false,
+                    'multiple' => false,
+                    'attr' => array("class" => "tall")))
         ;
     }
 

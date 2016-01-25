@@ -27,14 +27,7 @@ class OrgPositionService
         $this->em = $this->container->get("doctrine.orm.entity_manager");
     }
 
-    /**
-     * Add filters depending on the user organization position.
-     *
-     * @param QueryBuilder $queryBuilder
-     * @param User $user
-     * @return QueryBuilder
-     */
-    public function addPositionFilter(QueryBuilder $queryBuilder, User $user, $alias = null)
+    public function getLowerPositionUsers(User $user)
     {
         $userOrgPosition = $user->getOrgPosition();
 
@@ -51,6 +44,22 @@ class OrgPositionService
 
         /* get users with lower org positions */
         $lowerUsers = $userRepo->findByOrgPositions($lowerPositions);
+
+        return $lowerUsers;
+    }
+
+    /**
+     * Add filters depending on the user organization position.
+     *
+     * @param QueryBuilder $queryBuilder
+     * @param User $user
+     * @return QueryBuilder
+     */
+    public function addPositionFilter(QueryBuilder $queryBuilder, User $user, $alias = null)
+    {
+
+        /* get users with lower org positions */
+        $lowerUsers = $this->getLowerPositionUsers($user);
         $lowerPositionUsers = array();
         foreach ($lowerUsers as $lowerUser) {
             $lowerPositionUsers[] = $lowerUser->getId();
