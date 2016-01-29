@@ -24,10 +24,21 @@ services:
        tags:
            - { name: form.type_guesser }
 
+    user.repository.orgposition:
+        class: Doctrine\ORM\EntityRepository
+        factory: [@doctrine.orm.entity_manager, getRepository]
+        arguments:
+            - Flower\ModelBundle\Entity\User\OrgPosition
+
+    user.repository.user:
+            class: Doctrine\ORM\EntityRepository
+            factory: [@doctrine.orm.entity_manager, getRepository]
+            arguments:
+                - Flower\ModelBundle\Entity\User\User
 
     user.service.orgposition:
             class: Flower\UserBundle\Service\OrgPositionService
-            arguments: ['@service_container']
+            arguments: ['@user.repository.user','@user.repository.orgposition']
 
     user.service.securitygroup:
             class: Flower\UserBundle\Service\SecurityGroupService

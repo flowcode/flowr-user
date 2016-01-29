@@ -17,14 +17,19 @@ class OrgPositionService
 {
 
     /**
-     * @var Container
+     * @var \Doctrine\ORM\EntityRepository
      */
-    private $container;
+    private $userRepository;
 
-    public function __construct(ContainerInterface $container = NULL)
+    /**
+     * @var \Doctrine\ORM\EntityRepository
+     */
+    private $orgPositionRepository;
+
+    public function __construct(\Doctrine\ORM\EntityRepository $userRepository, \Doctrine\ORM\EntityRepository $orgPositionRepository)
     {
-        $this->container = $container;
-        $this->em = $this->container->get("doctrine.orm.entity_manager");
+        $this->userRepository = $userRepository;
+        $this->orgPositionRepository = $orgPositionRepository;
     }
 
     public function getLowerPositionUsers(User $user)
@@ -32,9 +37,7 @@ class OrgPositionService
         $userOrgPosition = $user->getOrgPosition();
 
         /* get lower org positions */
-        $orgPositionRepo = $this->em->getRepository('FlowerModelBundle:User\OrgPosition');
-        $userRepo = $this->em->getRepository('FlowerModelBundle:User\User');
-        $childrens = $orgPositionRepo->getChildren($userOrgPosition, false, null, null, true);
+        $childrens = $this->orgPositionRepository->getChildren($userOrgPosition, false, null, null, true);
 
 
         $lowerPositions = array();
@@ -43,11 +46,17 @@ class OrgPositionService
         }
 
         /* get users with lower org positions */
-        $lowerUsers = $userRepo->findByOrgPositions($lowerPositions);
+        $lowerUsers = $this->userRepository->findByOrgPositions($lowerPositions);
 
         return $lowerUsers;
     }
 
+    /**
+     * Get the upper positions.
+     *
+     * @param User $user
+     * @return array
+     */
     public function getUpperPositions(User $user)
     {
         $userOrgPosition = $user->getOrgPosition();
@@ -68,7 +77,6 @@ class OrgPositionService
     public function getUpperPositionUsers(User $user)
     {
         /* get upper org positions */
-        $userRepo = $this->em->getRepository('FlowerModelBundle:User\User');
         $parents = $this->getUpperPositions($user);
 
         $upperPositions = array();
@@ -77,7 +85,7 @@ class OrgPositionService
         }
 
         /* get users with lower org positions */
-        $lowerUsers = $userRepo->findByOrgPositions($upperPositions);
+        $lowerUsers = $this->userRepository->findByOrgPositions($upperPositions);
 
         return $lowerUsers;
     }
