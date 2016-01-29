@@ -48,6 +48,40 @@ class OrgPositionService
         return $lowerUsers;
     }
 
+    public function getUpperPositions(User $user)
+    {
+        $userOrgPosition = $user->getOrgPosition();
+        $parents = array();
+        $isParent = false;
+        while(!$isParent){
+            $parent = $userOrgPosition->getParent();
+            if(is_null($parent)){
+                $isParent = true;
+            }else{
+                $parents[] = $userOrgPosition;
+            }
+            $userOrgPosition = $parent;
+        }
+        return $parents;
+    }
+
+    public function getUpperPositionUsers(User $user)
+    {
+        /* get upper org positions */
+        $userRepo = $this->em->getRepository('FlowerModelBundle:User\User');
+        $parents = $this->getUpperPositions($user);
+
+        $upperPositions = array();
+        foreach ($parents as $upperPosition) {
+            $upperPositions[] = $upperPosition->getId();
+        }
+
+        /* get users with lower org positions */
+        $lowerUsers = $userRepo->findByOrgPositions($upperPositions);
+
+        return $lowerUsers;
+    }
+
     /**
      * Add filters depending on the user organization position.
      *

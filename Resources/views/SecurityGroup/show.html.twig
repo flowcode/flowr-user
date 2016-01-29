@@ -99,13 +99,9 @@
                         <tr>
                             <th scope="row">{{'Groups'|trans({}, 'User')}}</th>
                             <td>
-                                {{user.groups|join(',')}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'SecurityGroups'|trans({}, 'User')}}</th>
-                            <td>
-                                {{user.securityGroups|join(',')}}
+                                {% for group in user.groups %}
+                                        {{group.name}},
+                                {% endfor %}
                             </td>
                         </tr>
                     </tbody>

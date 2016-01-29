@@ -6,15 +6,18 @@
         {% set sort = app.session.get('sort.' ~ name) %}
         {% if sort and sort.field == field %}
             {% if sort.type == 'DESC' %}
-                <a href="{{ path('user_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'User')}} <i class="fa fa-sort-down"></i></a>
-                {% elseif sort.type == 'ASC' %}
-                <a href="{{ path('user_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'User')}} <i class="fa fa-sort-up"></i></a>
-                {% endif %}
-            {% else %}
-            <a href="{{ path('user_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'User')}} <i class="fa fa-sort"></i></a>
+                <a href="{{ path('user_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'User') }} <i
+                            class="fa fa-sort-down"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href="{{ path('user_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'User') }} <i
+                            class="fa fa-sort-up"></i></a>
             {% endif %}
-        {% endspaceless %}
-    {% endmacro %}
+        {% else %}
+            <a href="{{ path('user_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'User') }} <i
+                        class="fa fa-sort"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
 
 {% from _self import thead %}
 
@@ -22,17 +25,17 @@
 {% block body %}
     <section class="content-header">
         {% include 'FlowerCoreBundle:Default:admin_nav.html.twig' %}
-        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans}}</a>
+        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans }}</a>
             /
             {{ '%entity% list'|trans({'%entity%': 'User'}, 'User') }}
         </h1>
 
     </section>
-    <section class="content">    
+    <section class="content">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"></h3>
-                <div class="box-tools pull-right">                    
+                <div class="box-tools pull-right">
                     <a class="btn btn-link  btn-sm" href={{ path('user_new') }}>
                         <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'User'}, 'User') }}
                     </a>
@@ -41,42 +44,43 @@
                     </a>
                 </div>
             </div>
-            <div class="box-body">    
+            <div class="box-body">
                 <table class="table table-hover records_list table-condensed">
                     <thead>
-                        <tr>
-                            <th scope="col">{{ thead('user', 'id', 'Id') }}</th>
-                            <th scope="col">{{ thead('user', 'firstname', 'Firstname') }}</th>
-                            <th scope="col">{{ thead('user', 'lastname', 'Lastname') }}</th>
-                            <th scope="col">{{ thead('user', 'email', 'Email') }}</th>
-                            <th scope="col">{{ thead('user', 'username', 'Username') }}</th>
-                            <th scope="col">{{ thead('user', 'lastLogin', 'Lastlogin') }}</th>
-                            <th scope="col">{{ thead('user', 'enabled', 'Enabled') }}</th>
-                            <th scope="col">{{ 'Actions'|trans({}, 'User') }}</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">{{ thead('user', 'id', 'Id') }}</th>
+                        <th scope="col">{{ thead('user', 'firstname', 'Firstname') }}</th>
+                        <th scope="col">{{ thead('user', 'lastname', 'Lastname') }}</th>
+                        <th scope="col">{{ thead('user', 'email', 'Email') }}</th>
+                        <th scope="col">{{ thead('user', 'username', 'Username') }}</th>
+                        <th scope="col">{{ thead('user', 'lastLogin', 'Lastlogin') }}</th>
+                        <th scope="col">{{ thead('user', 'enabled', 'Enabled') }}</th>
+                        <th scope="col">{{ 'Actions'|trans({}, 'User') }}</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for user in paginator %}
-                            <tr>
-                                <td><a href="{{ path('user_show', {id: user.id}) }}">{{ user.id }}</a></td>
-                                <td>{{ user.firstname }}</td>
-                                <td>{{ user.lastname }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.username }}</td>
-                                <td>{% if user.lastLogin %}{{ user.lastLogin|date('fullDateTime'|trans) }}{% endif %}</td>
-                                <td>{% if user.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}</td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a class="btn btn-link  btn-sm" href="{{ path('user_show', {id: user.id}) }}">
-                                            {{ 'show'|trans({}, 'User') }}
-                                        </a>
-                                        <a class="btn btn-link  btn-sm" href="{{ path('user_edit', {id: user.id}) }}">
-                                            {{ 'edit'|trans({}, 'User') }}
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
+                    {% for user in paginator %}
+                        <tr>
+                            <td><a href="{{ path('user_show', {id: user.id}) }}">{{ user.id }}</a></td>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{% if user.lastLogin %}{{ user.lastLogin|date('fullDateTime'|trans) }}{% endif %}</td>
+                            <td>{% if user.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
+                                        class="fa fa-square-o"></i>{% endif %}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-link  btn-sm" href="{{ path('user_show', {id: user.id}) }}">
+                                        {{ 'show'|trans({}, 'User') }}
+                                    </a>
+                                    <a class="btn btn-link  btn-sm" href="{{ path('user_edit', {id: user.id}) }}">
+                                        {{ 'edit'|trans({}, 'User') }}
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
 
@@ -85,7 +89,8 @@
             <div class="box-footer">
 
             </div>
+        </div>
 
-    </section>        
+    </section>
 
 {% endblock %}

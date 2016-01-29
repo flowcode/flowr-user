@@ -3,9 +3,11 @@
 namespace Flower\UserBundle\Model;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -37,6 +39,13 @@ abstract class User extends BaseUser
      * @Groups({"kanban"})
      */
     protected $initials;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     */
+    protected $avatar;
 
     /**
      * @var string
@@ -74,6 +83,15 @@ abstract class User extends BaseUser
     protected $orgPosition;
 
     /**
+     * @ManyToMany(targetEntity="\Flower\ModelBundle\Entity\User\SecurityGroup")
+     * @JoinTable(name="users_user_security_groups",
+     *      joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="security_group_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $securityGroups;
+
+    /**
      * @var DateTime
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created", type="datetime")
@@ -97,6 +115,7 @@ abstract class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
+        $this->securityGroups = new ArrayCollection();
     }
 
     /**
@@ -282,6 +301,7 @@ abstract class User extends BaseUser
     {
         return $this->apiToken;
     }
+
     /**
     * Get initials
     * @return String 
@@ -319,6 +339,58 @@ abstract class User extends BaseUser
      */
     public function getOrgPosition() {
         return $this->orgPosition;
+    }
+
+    /**
+     * Get avatar
+     * @return String
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set avatar
+     * @return String
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+        return $this;
+    }
+
+    /**
+     * Add securityGroup
+     *
+     * @param \Flower\ModelBundle\Entity\User\SecurityGroup $securityGroups
+     * @return User
+     */
+    public function addSecurityGroup(\Flower\ModelBundle\Entity\User\SecurityGroup $securityGroups)
+    {
+        $this->securityGroups[] = $securityGroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove securityGroups
+     *
+     * @param \Flower\ModelBundle\Entity\User\SecurityGroup $securityGroups
+     */
+    public function removeSecurityGroup(\Flower\ModelBundle\Entity\User\SecurityGroup $securityGroups)
+    {
+        $this->securityGroups->removeElement($securityGroups);
+    }
+
+    /**
+     * Get securityGroups
+     *
+     * @return Collection
+     */
+    public function getSecurityGroups()
+    {
+        return $this->securityGroups;
     }
     
 }

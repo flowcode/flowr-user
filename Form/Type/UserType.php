@@ -22,7 +22,7 @@ class UserType extends AbstractType
                 ->add('initials')
                 ->add('plainPassword', 'password', array('required' => false, 'label' => "Password"))
                 ->add('orgPosition', 'y_tree', array(
-                    'class' => "Flower\ModelBundle\Entity\User\OrgPosition",
+                    'class' => 'Flower\ModelBundle\Entity\User\OrgPosition',
                     'orderFields' => array('root' => 'asc','lft' => 'asc'),
                     'prefixAttributeName' => 'data-level-prefix',
                     'treeLevelField' => 'lvl',
@@ -31,6 +31,12 @@ class UserType extends AbstractType
                     'attr' => array("class" => "tall")))
                 ->add('groups', 'entity', array(
                     'class' => 'FlowerModelBundle:User\UserGroup',
+                    'property' => 'name',
+                    'required' => false,
+                    'multiple' => true,
+                ))
+                ->add('securityGroups', 'entity', array(
+                    'class' => 'FlowerModelBundle:User\SecurityGroup',
                     'property' => 'name',
                     'required' => false,
                     'multiple' => true,

@@ -3,6 +3,7 @@
 namespace Flower\UserBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
+use Flower\ModelBundle\Entity\User\SecurityGroup;
 use Flower\ModelBundle\Entity\User\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -91,6 +92,13 @@ class UserController extends Controller
             $userManager->updateUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
+            $em->flush();
+
+            $securityGroup = new SecurityGroup();
+            $securityGroup->setName($user->getUsername());
+            $user->addSecurityGroup($securityGroup);
+
+            $em->persist($securityGroup);
             $em->flush();
 
             return $this->redirect($this->generateUrl('user'));

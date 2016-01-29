@@ -1,12 +1,15 @@
 services:
-#    flower_core.example:
-#        class: Flower\CoreBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+
     form.type.usergroup:
         class: Flower\UserBundle\Form\Type\UserGroupType
         arguments: ["@flower.security.roles"]
         tags:
-            - { name: form.type, alias: event_type }   
+            - { name: form.type, alias: event_type }
+
+    form.type.securitygroup:
+        class: Flower\UserBundle\Form\Type\SecurityGroupType
+        tags:
+            - { name: form.type, alias: securitygroup_type }
 
 
     symfony.form.type.tree:
@@ -24,4 +27,8 @@ services:
 
     user.service.orgposition:
             class: Flower\UserBundle\Service\OrgPositionService
+            arguments: ['@service_container']
+
+    user.service.securitygroup:
+            class: Flower\UserBundle\Service\SecurityGroupService
             arguments: ['@service_container']
