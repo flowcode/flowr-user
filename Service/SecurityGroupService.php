@@ -3,26 +3,30 @@
 namespace Flower\UserBundle\Service;
 
 
+use Flower\ModelBundle\Entity\User\SecurityGroup;
 use Flower\UserBundle\Model\User;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
+
 
 class SecurityGroupService
 {
-        /**
-     * @var Container
-     */
-    private $container;
 
-    public function __construct(ContainerInterface $container = NULL)
+    private $securityGroupRepository;
+    private $orgPositionService;
+
+    public function __construct(EntityRepository $securityGroupRepository, $orgPositionService)
     {
-        $this->container = $container;
-        $this->em = $this->container->get("doctrine.orm.entity_manager");
+        $this->securityGroupRepository = $securityGroupRepository;
+        $this->orgPositionService = $orgPositionService;
     }
 
     public function addSecurityGroupFilter(QueryBuilder $queryBuilder, User $user, $alias = null){
 
         $securityGroups = array();
+        $defaultSecGroup = $this->getDefaultForUser($user);
+        $securityGroups[] = $defaultSecGroup->getId();
+
         foreach($user->getSecurityGroups() as $secGroup){
             if(!in_array($secGroup->getId(), $securityGroups)){
                 $securityGroups[] = $secGroup->getId();
@@ -45,7 +49,7 @@ class SecurityGroupService
 
     public function getParentsGroups(User $user)
     {
-        $users = $this->container->get("user.service.orgposition")->getUpperPositionUsers($user);
+        $users = $this->orgPositionService->getUpperPositionUsers($user);
 
         $securityGroups = array();
         foreach($users as $user){
@@ -54,10 +58,20 @@ class SecurityGroupService
             }
         }
 
-        $securityGroupRepo = $this->em->getRepository('FlowerModelBundle:User\SecurityGroup');
-        $qb = $securityGroupRepo->createQueryBuilder("sg");
+        $qb = $this->securityGroupRepository->createQueryBuilder("sg");
         $qb->where("sg.id IN (:security_groups)")->setParameter("security_groups", $securityGroups);
         return $qb->getQuery()->getResult();
+    }
+
+
+    /**
+     * Get the default security group.
+     *
+     * @param User $user
+     * @return null|SecurityGroup
+     */
+    public function getDefaultForUser(User $user){
+        return $this->securityGroupRepository->getOneByAssignee($user->getId());
     }
 
 }

@@ -29,6 +29,12 @@ abstract class SecurityGroup
     protected $name;
 
     /**
+     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * */
+    protected $assignee;
+
+    /**
      * Get id
      *
      * @return integer
@@ -63,6 +69,29 @@ abstract class SecurityGroup
 
     public function __toString(){
         return $this->name;
+    }
+
+    /**
+     * Set assignee
+     *
+     * @param \Flower\ModelBundle\Entity\User\User $assignee
+     * @return \Flower\ModelBundle\Entity\User\SecurityGroup
+     */
+    public function setAssignee(\Flower\ModelBundle\Entity\User\User $assignee = null)
+    {
+        $this->assignee = $assignee;
+
+        return $this;
+    }
+
+    /**
+     * Get assignee
+     *
+     * @return \Flower\ModelBundle\Entity\User\User
+     */
+    public function getAssignee()
+    {
+        return $this->assignee;
     }
 
 }

@@ -4,8 +4,8 @@ namespace Flower\UserBundle\Service;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Flower\ModelBundle\Entity\User\User;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Description of OrgPositionService
@@ -17,16 +17,16 @@ class OrgPositionService
 {
 
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @var EntityRepository
      */
     private $userRepository;
 
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @var EntityRepository
      */
     private $orgPositionRepository;
 
-    public function __construct(\Doctrine\ORM\EntityRepository $userRepository, \Doctrine\ORM\EntityRepository $orgPositionRepository)
+    public function __construct(EntityRepository $userRepository, EntityRepository $orgPositionRepository)
     {
         $this->userRepository = $userRepository;
         $this->orgPositionRepository = $orgPositionRepository;

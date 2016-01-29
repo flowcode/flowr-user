@@ -16,6 +16,7 @@ class SecurityGroupType extends AbstractType
     {
         $builder
                 ->add('name')
+                ->add('assignee', null, array("required" => false))
         ;
     }
 
