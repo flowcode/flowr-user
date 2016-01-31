@@ -33,8 +33,11 @@ class EmployeeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('FlowerModelBundle:User\User')->findOneBy(array("username" => $username));
 
+        $activityFeed = $this->get('board.service.history')->getUserActivity($user);
+
         return array(
             'user' => $user,
+            'feed' => $activityFeed,
         );
     }
 

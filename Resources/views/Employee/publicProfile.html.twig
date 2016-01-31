@@ -41,7 +41,35 @@
                         <h3 class="box-title">{{ 'Activity' }}</h3>
                     </div>
                     <div class="box-body">
+                        <ul class="timeline">
+                            {% for activity in feed %}
+                                <li>
+                                    {% if activity.type == 'project' %}
+                                        <i class="fa fa-cog bg-blue"></i>
+                                    {% elseif activity.type == 'account' %}
+                                        <i class="fa fa-user bg-blue"></i>
+                                    {% elseif activity.type == 'task' %}
+                                        <i class="fa fa-clipboard bg-blue"></i>
+                                    {% endif %}
+                                    <div class="timeline-item">
+                                        <span class="time">
+                                            <i class="fa fa-clock-o"></i> {{ activity.changedOn|date('Y/m/d H:i') }}
+                                        </span>
+                                        <h3 class="timeline-header">
+                                            <a href="#">{{ activity.user|capitalize }}</a> Change {{ activity.attribute }}
+                                        </h3>
+                                        <div class="timeline-body">
+                                            {% if activity.message %}
+                                                {{ activity.message }}
+                                            {% else %}
+                                                Set {{ activity.attribute }} to {{ activity.value }}
+                                            {% endif %}
 
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                     <div class="box-footer">
 
