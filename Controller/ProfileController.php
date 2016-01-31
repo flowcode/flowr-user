@@ -12,6 +12,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Flower\UserBundle\Form\Type\UserType;
 use Flower\UserBundle\Form\Type\UserProfileType;
+
 /**
  * User controller.
  *
@@ -22,17 +23,16 @@ class ProfileController extends Controller
     /**
      * Create Delete form
      *
-     * @param integer                       $id
-     * @param string                        $route
+     * @param integer $id
+     * @param string $route
      * @return Form
      */
     protected function createDeleteForm($id, $route)
     {
         return $this->createFormBuilder(null, array('attr' => array('id' => 'delete')))
-                        ->setAction($this->generateUrl($route, array('id' => $id)))
-                        ->setMethod('DELETE')
-                        ->getForm()
-        ;
+            ->setAction($this->generateUrl($route, array('id' => $id)))
+            ->setMethod('DELETE')
+            ->getForm();
     }
 
     /**
@@ -42,18 +42,35 @@ class ProfileController extends Controller
      * @Method("GET")
      * @Template("FlowerUserBundle:User:avatar.html.twig")
      */
-    public function avatarAction($user = null)
+    public function avatarAction(User $user = null, $size = null)
     {
-        $hash ="";
-        if(!is_null($user)){
-            $hash = md5(strtolower(trim($user->getEmail())));
-        }elseif ($this->getUser()){
-            $hash = md5(strtolower(trim($this->getUser()->getEmail())));
+        $gravatarUrl = "http://www.gravatar.com/avatar/";
+
+        $external = false;
+        if (is_null($user)) {
+            $user = $this->getUser();
         }
+
+        /* check user settings */
+        if(strlen($user->getAvatar()) > 0){
+            $avatarUrl = $user->getAvatar();
+        }else{
+            $external = true;
+            $hash = md5(strtolower(trim($user->getEmail())));
+            $avatarUrl = $gravatarUrl.$hash;
+        }
+
+        if(is_null($size)){
+            $size = 'small';
+        }
+
         return array(
-            'hash' => $hash,
+            'external' => $external,
+            'size' => $size,
+            'avatarUrl' => $avatarUrl,
         );
     }
+
     /**
      * Displays a form to edit an existing User entity.
      *
@@ -93,6 +110,9 @@ class ProfileController extends Controller
         ));
         if ($editForm->handleRequest($request)->isValid()) {
             $userManager = $this->container->get('fos_user.user_manager');
+
+            $user = $this->get('user.service.user')->uploadImage($user);
+
             $userManager->updateUser($user);
             $this->getDoctrine()->getManager()->flush();
 
@@ -113,7 +133,8 @@ class ProfileController extends Controller
      * @Method("GET")
      * @Template("FlowerUserBundle:User:notifications.html.twig")
      */
-    public function notificationsAction(){
+    public function notificationsAction()
+    {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $notifications = $em->getRepository("FlowerModelBundle:User\UserNotification")->findBy(array('user' => $user), array('created' => 'DESC'), 10, 0);

@@ -36,6 +36,11 @@ services:
         arguments:
             - Flower\ModelBundle\Entity\User\SecurityGroup
 
+    user.service.user:
+        class: Flower\UserBundle\Service\UserService
+        calls:
+            - [setContainer, ["@service_container"]]
+
     user.repository.user:
             class: Doctrine\ORM\EntityRepository
             factory: [@doctrine.orm.entity_manager, getRepository]

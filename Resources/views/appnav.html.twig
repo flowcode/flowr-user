@@ -6,7 +6,7 @@
                 <li role="presentation" 
                 {% if app_employee is defined %}class="active"{% endif %}
                 >
-                    <a href="{{ path('employee') }}">{{ '%entity% list'|trans({'%entity%': 'Employee'}, 'Employee') }}</a>
+                    <a href="{{ path('employee') }}">{{ 'organization'|trans({}, 'User')|title }}</a>
                 </li>
 
             </ul>

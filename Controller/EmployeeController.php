@@ -22,6 +22,23 @@ class EmployeeController extends Controller
 {
 
     /**
+     * Finds and displays a User entity.
+     *
+     * @Route("/profile/{username}", name="employee_profile_public")
+     * @Method("GET")
+     * @Template()
+     */
+    public function publicProfileAction($username)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('FlowerModelBundle:User\User')->findOneBy(array("username" => $username));
+
+        return array(
+            'user' => $user,
+        );
+    }
+
+    /**
      * Lists all User entities.
      *
      * @Route("/", name="employee")
@@ -37,21 +54,6 @@ class EmployeeController extends Controller
 
         return array(
             'paginator' => $paginator,
-        );
-    }
-
-    /**
-     * Finds and displays a User entity.
-     *
-     * @Route("/{id}/show", name="employee_profile", requirements={"id"="\d+"})
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction(User $user)
-    {
-
-        return array(
-            'user' => $user,
         );
     }
 

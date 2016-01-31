@@ -10,9 +10,16 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="box box-solid">
+                    <div class="box-header">
+                        <div class="box-tools">
+                            {% if user.id == app.user.id %}
+                                <a href="{{ path('user_profile') }}" class="btn btn-link btn-xs">{{ 'edit profile'|trans|title }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="box-body box-profile">
                         <div class="text-center">
-                            {{ render(controller('FlowerUserBundle:Profile:avatar',{'user':user})) }}
+                            {{ render(controller('FlowerUserBundle:Profile:avatar',{'user':user, 'size':'medium'})) }}
                         </div>
                         <h3 class="profile-username text-center">{{ user.getHappyName()|title }}</h3>
                         <h5 class="text-muted text-center">{{ user.orgPosition|title }}</h5>
