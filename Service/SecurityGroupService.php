@@ -47,6 +47,27 @@ class SecurityGroupService
         return $queryBuilder;
     }
 
+    public function getLowerGroupsIds(User $user)
+    {
+        $lowerUsers = $this->orgPositionService->getLowerPositionUsers($user);
+        $securityGroups = array();
+        foreach ($lowerUsers as $user) {
+            foreach($user->getSecurityGroups() as $secGroup){
+                $securityGroups[] = $secGroup->getId();
+            }
+        }
+        return $securityGroups;
+    }
+
+    public function getLowerGroups(User $user)
+    {
+        $securityGroups = $this->getLowerGroupsIds();
+        $qb = $this->securityGroupRepository->createQueryBuilder("sg");
+        $qb->where("sg.id IN (:security_groups)")->setParameter("security_groups", $securityGroups);
+        return $qb->getQuery()->getResult();
+
+    }
+
     public function getParentsGroups(User $user)
     {
         $users = $this->orgPositionService->getUpperPositionUsers($user);
