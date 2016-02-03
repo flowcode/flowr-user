@@ -47,6 +47,39 @@ class SecurityGroupService
         return $queryBuilder;
     }
 
+    public function addLowerSecurityGroupsFilter(QueryBuilder $queryBuilder, User $user, $alias = null){
+
+        $securityGroups = array();
+        $defaultSecGroup = $this->getDefaultForUser($user);
+        $securityGroups[] = $defaultSecGroup->getId();
+
+        foreach($user->getSecurityGroups() as $secGroup){
+            if(!in_array($secGroup->getId(), $securityGroups)){
+                $securityGroups[] = $secGroup->getId();
+            }
+        }
+
+        $lowerSecGroupIds = $this->getLowerGroupsIds($user);
+        foreach($lowerSecGroupIds as $secGroupLow){
+            if(!in_array($secGroupLow, $securityGroups)){
+                $securityGroups[] = $secGroupLow;
+            }
+        }
+
+        $aliasFix = "";
+        if ($alias) {
+            $aliasFix .= $alias . ".";
+        }
+
+        $queryBuilder
+            ->join($aliasFix . 'securityGroups', 'secgroup')
+            ->andWhere('secgroup.id IN (:security_groups)')
+            ->setParameter("security_groups", $securityGroups)
+        ;
+
+        return $queryBuilder;
+    }
+
     public function getLowerGroupsIds(User $user)
     {
         $lowerUsers = $this->orgPositionService->getLowerPositionUsers($user);

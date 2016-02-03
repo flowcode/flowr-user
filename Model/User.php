@@ -15,6 +15,7 @@ use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\User as BaseUser;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JMS\Serializer\Annotation\Groups;
 /**
  * User
@@ -104,6 +105,11 @@ abstract class User extends BaseUser
      * @ORM\Column(name="api_token", type="string", length=255, nullable=true)
      */
     protected $apiToken;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    protected $file;
 
     /**
      * @var DateTime
@@ -391,6 +397,26 @@ abstract class User extends BaseUser
     public function getSecurityGroups()
     {
         return $this->securityGroups;
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
     
 }

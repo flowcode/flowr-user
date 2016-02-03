@@ -1,0 +1,5 @@
+<div class="feed">
+    {% for activity in feed %}
+        {{ include('FlowerUserBundle:Profile:activity_feed_entry.html.twig', {'activity':activity}) }}
+    {% endfor %}
+</div>

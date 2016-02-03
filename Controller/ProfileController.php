@@ -72,6 +72,26 @@ class ProfileController extends Controller
     }
 
     /**
+     * Finds and displays a User entity.
+     *
+     * @Route("/p/{username}", name="user_profile_public")
+     * @Method("GET")
+     * @Template()
+     */
+    public function publicProfileAction($username)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('FlowerModelBundle:User\User')->findOneBy(array("username" => $username));
+
+        $activityFeed = $this->get('board.service.history')->getUserActivity($this->getUser(), $user);
+
+        return array(
+            'user' => $user,
+            'feed' => $activityFeed,
+        );
+    }
+
+    /**
      * Displays a form to edit an existing User entity.
      *
      * @Route("/profile", name="user_profile")

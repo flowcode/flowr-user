@@ -16,30 +16,11 @@ use Flower\UserBundle\Form\Type\UserProfileType;
 /**
  * User controller.
  *
- * @Route("/employee")
+ * @Route("/organization")
  */
-class EmployeeController extends Controller
+class OrganizationController extends Controller
 {
 
-    /**
-     * Finds and displays a User entity.
-     *
-     * @Route("/profile/{username}", name="employee_profile_public")
-     * @Method("GET")
-     * @Template()
-     */
-    public function publicProfileAction($username)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('FlowerModelBundle:User\User')->findOneBy(array("username" => $username));
-
-        $activityFeed = $this->get('board.service.history')->getUserActivity($user);
-
-        return array(
-            'user' => $user,
-            'feed' => $activityFeed,
-        );
-    }
 
     /**
      * Lists all User entities.
