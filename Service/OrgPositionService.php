@@ -67,7 +67,7 @@ class OrgPositionService
             if(is_null($parent)){
                 $isParent = true;
             }else{
-                $parents[] = $userOrgPosition;
+                $parents[] = $parent;
             }
             $userOrgPosition = $parent;
         }
