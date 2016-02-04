@@ -37,9 +37,7 @@ class OrgPositionService
         $userOrgPosition = $user->getOrgPosition();
 
         /* get lower org positions */
-        $childrens = $this->orgPositionRepository->getChildren($userOrgPosition, false, null, null, true);
-
-
+        $childrens = $this->orgPositionRepository->getChildren($userOrgPosition);
         $lowerPositions = array();
         foreach ($childrens as $lowerPosition) {
             $lowerPositions[] = $lowerPosition->getId();
@@ -99,20 +97,17 @@ class OrgPositionService
      */
     public function addPositionFilter(QueryBuilder $queryBuilder, User $user, $alias = null)
     {
-
-        /* get users with lower org positions */
-        $lowerUsers = $this->getLowerPositionUsers($user);
-        $lowerPositionUsers = array();
-        foreach ($lowerUsers as $lowerUser) {
-            $lowerPositionUsers[] = $lowerUser->getId();
+        $userOrgPosition = $user->getOrgPosition();
+        $lowerPositions = $this->orgPositionRepository->getChildren($userOrgPosition);
+        $lowerPositionsIds = array();
+        foreach ($lowerPositions as $position) {
+            $lowerPositionsIds[] = $position->getId();
         }
-
         $aliasFix = "";
         if ($alias) {
             $aliasFix .= $alias . ".";
         }
-
-        $queryBuilder->andWhere($aliasFix . 'assignee IN (:users)')->setParameter("users", $lowerPositionUsers);
+        $queryBuilder->andWhere($aliasFix . 'orgPosition IN (:position)')->setParameter("position", $lowerPositionsIds);
 
         return $queryBuilder;
     }
