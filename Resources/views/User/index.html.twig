@@ -53,6 +53,8 @@
                         <th scope="col">{{ thead('user', 'lastname', 'Lastname') }}</th>
                         <th scope="col">{{ thead('user', 'email', 'Email') }}</th>
                         <th scope="col">{{ thead('user', 'username', 'Username') }}</th>
+                        <th>{{'orgPosition'|trans({},'User')}}</th>
+                        <th>{{'securityGroups'|trans({},'User')}}</th>
                         <th scope="col">{{ thead('user', 'lastLogin', 'Lastlogin') }}</th>
                         <th scope="col">{{ thead('user', 'enabled', 'Enabled') }}</th>
                         <th scope="col">{{ 'Actions'|trans({}, 'User') }}</th>
@@ -66,6 +68,12 @@
                             <td>{{ user.lastname }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.username }}</td>
+                            <td>{{ user.orgPosition }}</td>
+                            <td>
+                                {% for item in user.securityGroups %}
+                                    {{item}}, 
+                                {% endfor %}
+                            </td>
                             <td>{% if user.lastLogin %}{{ user.lastLogin|date('fullDateTime'|trans) }}{% endif %}</td>
                             <td>{% if user.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
                                         class="fa fa-square-o"></i>{% endif %}</td>

@@ -53,6 +53,7 @@ class OrganizationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('FlowerModelBundle:User\User')->createQueryBuilder('u');
+        $qb->where("u.enabled = 1");
         //$this->addQueryBuilderSort($qb, 'user');
         $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
 

@@ -80,21 +80,24 @@ class SecurityGroupService
         return $queryBuilder;
     }
 
-    public function getLowerGroupsIds(User $user)
+    public function getLowerGroupsIds(User $user, $withMe = true)
     {
-        $lowerUsers = $this->orgPositionService->getLowerPositionUsers($user);
+        $lowerUsers = $this->orgPositionService->getLowerPositionUsers($user, $withMe);
         $securityGroups = array();
-        foreach ($lowerUsers as $user) {
-            foreach($user->getSecurityGroups() as $secGroup){
+        foreach ($lowerUsers as $lowerUser) {
+            foreach($lowerUser->getSecurityGroups() as $secGroup){
                 $securityGroups[] = $secGroup->getId();
             }
+        }
+        foreach($user->getSecurityGroups() as $secGroup){
+            $securityGroups[] = $secGroup->getId();
         }
         return $securityGroups;
     }
 
     public function getLowerGroups(User $user)
     {
-        $securityGroups = $this->getLowerGroupsIds();
+        $securityGroups = $this->getLowerGroupsIds($user);
         $qb = $this->securityGroupRepository->createQueryBuilder("sg");
         $qb->where("sg.id IN (:security_groups)")->setParameter("security_groups", $securityGroups);
         return $qb->getQuery()->getResult();
@@ -128,4 +131,20 @@ class SecurityGroupService
         return $this->securityGroupRepository->getOneByAssignee($user->getId());
     }
 
+    public function userCanSeeEntity($user, $entity){
+        $userGroups = $this->getLowerGroups($user, false);
+        $canSee = false;
+        foreach ($userGroups as $group) {
+            foreach ($entity->getSecurityGroups() as $entityGroup) {
+                if($group->getId() == $entityGroup->getId()){
+                    $canSee = true;
+                    break;
+                }
+            }
+            if($canSee){
+                break;
+            }
+        }
+    return $canSee;
+    }
 }
