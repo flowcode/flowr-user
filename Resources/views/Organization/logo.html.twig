@@ -1,0 +1,11 @@
+{% if logo_path %}
+    {% if size == 'xs' %}
+        <img src="{{ logo_path|imagine_filter('organization_logo_sm') }}"/>
+    {% elseif size == 'md' %}
+        <img src="{{ logo_path|imagine_filter('organization_logo_md') }}"/>
+    {% else %}
+        <img src="{{ logo_path }}" class="icon img-responsive" width="40"/>
+    {% endif %}
+{% else %}
+    <img src="{{ asset('bundles/flowercore/images/logo_square_white.png') }}" class="icon img-responsive" width="40">
+{% endif %}

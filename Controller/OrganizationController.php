@@ -3,6 +3,7 @@
 namespace Flower\UserBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
+use Flower\ModelBundle\Entity\User\OrganizationSetting;
 use Flower\ModelBundle\Entity\User\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,6 +22,25 @@ use Flower\UserBundle\Form\Type\UserProfileType;
 class OrganizationController extends Controller
 {
 
+    /**
+     * Lists all User entities.
+     *
+     * @Route("/logo", name="organization_logo")
+     * @Method("GET")
+     * @Template()
+     */
+    public function logoAction($size = null)
+    {
+        $logo = $this->get('user.service.organization_setting')->getValue(OrganizationSetting::logo);
+        if($logo){
+            $logo = 'uploads' . $logo->getValue();
+        }
+        return array(
+            "size" => $size,
+            "logo_path" => $logo ? $logo : null,
+        );
+
+    }
 
     /**
      * Lists all User entities.
@@ -40,7 +60,6 @@ class OrganizationController extends Controller
             'paginator' => $paginator,
         );
     }
-
 
 
 }

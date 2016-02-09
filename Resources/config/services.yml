@@ -47,6 +47,12 @@ services:
             arguments:
                 - Flower\ModelBundle\Entity\User\User
 
+    user.repository.organization_setting:
+                class: Doctrine\ORM\EntityRepository
+                factory: [@doctrine.orm.entity_manager, getRepository]
+                arguments:
+                    - Flower\ModelBundle\Entity\User\OrganizationSetting
+
     user.service.orgposition:
             class: Flower\UserBundle\Service\OrgPositionService
             arguments: ['@user.repository.user','@user.repository.orgposition']
@@ -54,3 +60,7 @@ services:
     user.service.securitygroup:
             class: Flower\UserBundle\Service\SecurityGroupService
             arguments: ['@user.repository.securitygroup','@user.service.orgposition']
+
+    user.service.organization_setting:
+                class: Flower\UserBundle\Service\OrganizationSettingService
+                arguments: ['@user.repository.organization_setting']

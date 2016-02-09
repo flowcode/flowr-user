@@ -17,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use JMS\Serializer\Annotation\Groups;
+
 /**
  * User
  * @author Juan Manuel Agüero <jaguero@flowcode.com.ar>
@@ -78,6 +79,11 @@ abstract class User extends BaseUser
     protected $groups;
 
     /**
+     * @ManyToMany(targetEntity="\Flower\ModelBundle\Entity\Marketing\ContactList", mappedBy="users")
+     */
+    private $contactLists;
+
+    /**
      * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\User\OrgPosition")
      * @JoinColumn(name="position_id", referencedColumnName="id")
      * */
@@ -122,6 +128,7 @@ abstract class User extends BaseUser
     {
         parent::__construct();
         $this->securityGroups = new ArrayCollection();
+        $this->contactLists = new ArrayCollection();
     }
 
     /**
@@ -309,18 +316,18 @@ abstract class User extends BaseUser
     }
 
     /**
-    * Get initials
-    * @return String 
-    */
+     * Get initials
+     * @return String
+     */
     public function getInitials()
     {
         return $this->initials;
     }
-    
+
     /**
-    * Set initials
-    * @return String 
-    */
+     * Set initials
+     * @return String
+     */
     public function setInitials($initials)
     {
         $this->initials = $initials;
@@ -333,7 +340,8 @@ abstract class User extends BaseUser
      * @param \Flower\ModelBundle\Entity\User\OrgPosition $orgposition
      * @return User
      */
-    public function setOrgPosition(\Flower\ModelBundle\Entity\User\OrgPosition $orgposition = null) {
+    public function setOrgPosition(\Flower\ModelBundle\Entity\User\OrgPosition $orgposition = null)
+    {
         $this->orgPosition = $orgposition;
         return $this;
     }
@@ -343,7 +351,8 @@ abstract class User extends BaseUser
      *
      * @return \Flower\ModelBundle\Entity\User\OrgPosition
      */
-    public function getOrgPosition() {
+    public function getOrgPosition()
+    {
         return $this->orgPosition;
     }
 
@@ -418,5 +427,5 @@ abstract class User extends BaseUser
     {
         return $this->file;
     }
-    
+
 }

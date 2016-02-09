@@ -1,7 +1,7 @@
 {% if external %}
-<img src="{{ avatarUrl }}" class="img-circle" alt="User Image" />
+    <img src="{{ avatarUrl }}" class="img-circle" alt="User Image" />
 {% elseif size == 'small' %}
-<img src="{{ avatarUrl|imagine_filter('user_avatar_small') }}" class="img-circle" alt="User Image" />
+    <img src="{{ avatarUrl|imagine_filter('user_avatar_small') }}" class="img-circle" alt="User Image" />
 {% else %}
     <img src="{{ avatarUrl|imagine_filter('user_avatar_medium') }}" class="img-circle" alt="User Image" />
 {% endif %}

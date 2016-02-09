@@ -18,7 +18,7 @@
                 <i class="fa fa-clipboard"></i>
             {% endif %}
             {% if activity.message %}
-                {{ activity.message }}
+                {{ activity.message|raw }}
             {% else %}
                 Set {{ activity.attribute }} to {{ activity.value }}
             {% endif %}

@@ -3,7 +3,8 @@
 namespace Flower\UserBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Description of OrganizationSetting
@@ -13,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 abstract class OrganizationSetting
 {
+
+    const logo = "logo";
+    const name = "name";
 
     /**
      * @var integer
@@ -26,7 +30,7 @@ abstract class OrganizationSetting
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     protected $name;
 
