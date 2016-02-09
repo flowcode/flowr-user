@@ -17,7 +17,12 @@ class OrganizationSettingService
      * @param $settingName
      * @return mixed
      */
-    public function getValue($settingName){
-        return $this->organizationSettingRepository->findOneBy(array('name' => $settingName));
+    public function getValue($settingName)
+    {
+        $setting = $this->organizationSettingRepository->findOneBy(array('name' => $settingName));
+        if ($setting) {
+            return $setting->getValue();
+        }
+        return null;
     }
 }

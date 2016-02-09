@@ -16,7 +16,10 @@ abstract class OrganizationSetting
 {
 
     const logo = "logo";
-    const name = "name";
+    const org_title = "organization_title";
+
+    const type_string = 'string';
+    const type_file_image = 'file_image';
 
     /**
      * @var integer
@@ -104,6 +107,22 @@ abstract class OrganizationSetting
     public function setValue($value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
 
