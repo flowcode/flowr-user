@@ -21,14 +21,21 @@ class SecurityGroupService
         $this->orgPositionService = $orgPositionService;
     }
 
-    public function addSecurityGroupFilter(QueryBuilder $queryBuilder, User $user, $alias = null){
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @param User $user
+     * @param null $alias
+     * @return QueryBuilder
+     */
+    public function addSecurityGroupFilter(QueryBuilder $queryBuilder, User $user, $alias = null)
+    {
 
         $securityGroups = array();
         $defaultSecGroup = $this->getDefaultForUser($user);
         $securityGroups[] = $defaultSecGroup->getId();
 
-        foreach($user->getSecurityGroups() as $secGroup){
-            if(!in_array($secGroup->getId(), $securityGroups)){
+        foreach ($user->getSecurityGroups() as $secGroup) {
+            if (!in_array($secGroup->getId(), $securityGroups)) {
                 $securityGroups[] = $secGroup->getId();
             }
         }
@@ -41,27 +48,33 @@ class SecurityGroupService
         $queryBuilder
             ->join($aliasFix . 'securityGroups', 'secgroup')
             ->andWhere('secgroup.id IN (:security_groups)')
-            ->setParameter("security_groups", $securityGroups)
-        ;
+            ->setParameter("security_groups", $securityGroups);
 
         return $queryBuilder;
     }
 
-    public function addLowerSecurityGroupsFilter(QueryBuilder $queryBuilder, User $user, $alias = null){
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @param User $user
+     * @param null $alias
+     * @return QueryBuilder
+     */
+    public function addLowerSecurityGroupsFilter(QueryBuilder $queryBuilder, User $user, $alias = null)
+    {
 
         $securityGroups = array();
         $defaultSecGroup = $this->getDefaultForUser($user);
         $securityGroups[] = $defaultSecGroup->getId();
 
-        foreach($user->getSecurityGroups() as $secGroup){
-            if(!in_array($secGroup->getId(), $securityGroups)){
+        foreach ($user->getSecurityGroups() as $secGroup) {
+            if (!in_array($secGroup->getId(), $securityGroups)) {
                 $securityGroups[] = $secGroup->getId();
             }
         }
 
         $lowerSecGroupIds = $this->getLowerGroupsIds($user);
-        foreach($lowerSecGroupIds as $secGroupLow){
-            if(!in_array($secGroupLow, $securityGroups)){
+        foreach ($lowerSecGroupIds as $secGroupLow) {
+            if (!in_array($secGroupLow, $securityGroups)) {
                 $securityGroups[] = $secGroupLow;
             }
         }
@@ -74,27 +87,35 @@ class SecurityGroupService
         $queryBuilder
             ->join($aliasFix . 'securityGroups', 'secgroup')
             ->andWhere('secgroup.id IN (:security_groups)')
-            ->setParameter("security_groups", $securityGroups)
-        ;
+            ->setParameter("security_groups", $securityGroups);
 
         return $queryBuilder;
     }
 
+    /**
+     * @param User $user
+     * @param bool $withMe
+     * @return array
+     */
     public function getLowerGroupsIds(User $user, $withMe = true)
     {
         $lowerUsers = $this->orgPositionService->getLowerPositionUsers($user, $withMe);
         $securityGroups = array();
         foreach ($lowerUsers as $lowerUser) {
-            foreach($lowerUser->getSecurityGroups() as $secGroup){
+            foreach ($lowerUser->getSecurityGroups() as $secGroup) {
                 $securityGroups[] = $secGroup->getId();
             }
         }
-        foreach($user->getSecurityGroups() as $secGroup){
+        foreach ($user->getSecurityGroups() as $secGroup) {
             $securityGroups[] = $secGroup->getId();
         }
         return $securityGroups;
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function getLowerGroups(User $user)
     {
         $securityGroups = $this->getLowerGroupsIds($user);
@@ -104,13 +125,17 @@ class SecurityGroupService
 
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function getParentsGroups(User $user)
     {
         $users = $this->orgPositionService->getUpperPositionUsers($user);
 
         $securityGroups = array();
-        foreach($users as $user){
-            foreach($user->getSecurityGroups() as $secGroup){
+        foreach ($users as $user) {
+            foreach ($user->getSecurityGroups() as $secGroup) {
                 $securityGroups[] = $secGroup->getId();
             }
         }
@@ -127,24 +152,32 @@ class SecurityGroupService
      * @param User $user
      * @return null|SecurityGroup
      */
-    public function getDefaultForUser(User $user){
+    public function getDefaultForUser(User $user)
+    {
         return $this->securityGroupRepository->getOneByAssignee($user->getId());
     }
 
-    public function userCanSeeEntity($user, $entity){
+    /**
+     * @param $user
+     * @param $entity
+     * @return bool
+     */
+    public function userCanSeeEntity($user, $entity)
+    {
         $userGroups = $this->getLowerGroups($user, false);
         $canSee = false;
         foreach ($userGroups as $group) {
             foreach ($entity->getSecurityGroups() as $entityGroup) {
-                if($group->getId() == $entityGroup->getId()){
+                if ($group->getId() == $entityGroup->getId()) {
                     $canSee = true;
                     break;
                 }
             }
-            if($canSee){
+            if ($canSee) {
                 break;
             }
         }
-    return $canSee;
+        return $canSee;
     }
+
 }
