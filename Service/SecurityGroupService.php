@@ -59,16 +59,18 @@ class SecurityGroupService
      * @param null $alias
      * @return QueryBuilder
      */
-    public function addLowerSecurityGroupsFilter(QueryBuilder $queryBuilder, User $user, $alias = null)
+    public function addLowerSecurityGroupsFilter(QueryBuilder $queryBuilder, User $user, $alias = null, $allUserSecurityGroups = false)
     {
 
         $securityGroups = array();
         $defaultSecGroup = $this->getDefaultForUser($user);
         $securityGroups[] = $defaultSecGroup->getId();
 
-        foreach ($user->getSecurityGroups() as $secGroup) {
-            if (!in_array($secGroup->getId(), $securityGroups)) {
-                $securityGroups[] = $secGroup->getId();
+        if ($allUserSecurityGroups) {
+            foreach ($user->getSecurityGroups() as $secGroup) {
+                if (!in_array($secGroup->getId(), $securityGroups)) {
+                    $securityGroups[] = $secGroup->getId();
+                }
             }
         }
 

@@ -20,14 +20,14 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         $user = $this->createQueryBuilder('u')
-                ->where('u.username = :username')
-                ->setParameter('username', $username)
-                ->getQuery()
-                ->getOneOrNullResult();
+            ->where('u.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
 
         if (null === $user) {
             $message = sprintf(
-                    'Unable to find an active admin User object identified by "%s".', $username
+                'Unable to find an active admin User object identified by "%s".', $username
             );
             throw new UsernameNotFoundException($message);
         }
@@ -40,9 +40,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
             throw new UnsupportedUserException(
-            sprintf(
+                sprintf(
                     'Instances of "%s" are not supported.', $class
-            )
+                )
             );
         }
 
@@ -54,12 +54,13 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
 
-    public function findByOrgPositions($orgPositions = array()){
+    public function findByOrgPositions($orgPositions = array())
+    {
         $qb = $this->createQueryBuilder('u')
             ->where('u.orgPosition IN (:orgPositions)')
             ->setParameter('orgPositions', $orgPositions);
 
-            return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getResult();
     }
 
 }

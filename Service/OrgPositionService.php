@@ -32,13 +32,18 @@ class OrgPositionService
         $this->orgPositionRepository = $orgPositionRepository;
     }
 
-    public function getLowerPositionUsers(User $user)
+    public function getLowerPositionUsers(User $user, $includeUserPosition = false)
     {
         $userOrgPosition = $user->getOrgPosition();
 
         /* get lower org positions */
         $childrens = $this->orgPositionRepository->getChildren($userOrgPosition);
         $lowerPositions = array();
+
+        if($includeUserPosition){
+            $lowerPositions[] = $userOrgPosition->getId();
+        }
+
         foreach ($childrens as $lowerPosition) {
             $lowerPositions[] = $lowerPosition->getId();
         }
