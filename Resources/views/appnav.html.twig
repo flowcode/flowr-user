@@ -1,14 +1,15 @@
-		<div class="nav-app">
-            <ul class="nav nav-tabs ">
-                <li role="presentation" class="app-icon">
-                    <img src="{{ asset('bundles/flowercore/images/icons/Organization-100.png') }}" class="img-responsive">
-                </li>
-                <li role="presentation" {% if app_employee is defined %}class="active"{% endif %}>
-                    <a href="{{ path('employee') }}">{{ 'organization'|trans({}, 'User')|title }}</a>
-                </li>
-                <li role="presentation" {% if app_settings is defined %}class="active"{% endif %}>
-                    <a href="{{ path('organization_settings') }}">{{ 'settings'|trans|title }}</a>
-                </li>
-
-            </ul>
-        </div>
+<div class="nav-app">
+    <ul class="nav nav-tabs ">
+        <li role="presentation" class="app-icon">
+            <img src="{{ asset('bundles/flowercore/images/icons/Organization-100.png') }}" class="img-responsive">
+        </li>
+        <li role="presentation" {% if app_employee is defined %}class="active"{% endif %}>
+            <a href="{{ path('employee') }}">{{ 'organization'|trans({}, 'User')|title }}</a>
+        </li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li role="presentation" {% if app_settings is defined %}class="active"{% endif %}>
+                <a href="{{ path('organization_settings') }}">{{ 'settings'|trans|title }}</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
