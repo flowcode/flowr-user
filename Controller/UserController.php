@@ -101,6 +101,9 @@ class UserController extends Controller
             $em->persist($securityGroup);
             $em->flush();
 
+            $user->addSecurityGroup($securityGroup);
+            $em->flush();
+
             return $this->redirect($this->generateUrl('user'));
         }
 
