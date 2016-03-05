@@ -2,19 +2,22 @@
 
 {% block title %}UserGroup - {{ parent() }}{% endblock %}
 
+{% block app_menu %}
+    {{ include("FlowerCoreBundle:Default:admin_nav.html.twig") }}
+{% endblock %}
+
 {% block body %}
     <section class="content-header">
-        {% include 'FlowerCoreBundle:Default:admin_nav.html.twig' %}
-        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans}}</a>
+        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans }}</a>
             /
             <a href={{ path('usergroup') }}>
-                {{ 'UserGroup' | trans({}, 'UserGroup')}}
+                {{ 'UserGroup' | trans({}, 'UserGroup') }}
             </a>
             /
             {{ '%entity%'|trans({'%entity%': 'UserGroup'}, 'UserGroup') }}
         </h1>
     </section>
-    <section class="content">    
+    <section class="content">
         <div class="box">
             <div class="box-header">
                 <div class="box-tools">
@@ -26,7 +29,8 @@
                         <a class="btn btn-link  btn-sm" href="{{ path('usergroup_edit', {id: usergroup.id}) }}">
                             {{ 'Edit'|trans({}, 'UserGroup') }}
                         </a>
-                        <button class="btn btn-link  btn-sm" type="submit">{{ 'Delete'|trans({}, 'UserGroup') }}</button>
+                        <button class="btn btn-link  btn-sm"
+                                type="submit">{{ 'Delete'|trans({}, 'UserGroup') }}</button>
 
                     </div>
 
@@ -37,16 +41,19 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
                                     <h3>{{ 'Confirm delete'|trans({}, 'UserGroup') }}</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <p>{{ 'You are about to delete an item'|trans({}, 'UserGroup') }}, {{ 'this procedure is irreversible'|trans({}, 'UserGroup') }}.</p>
+                                    <p>{{ 'You are about to delete an item'|trans({}, 'UserGroup') }}
+                                        , {{ 'this procedure is irreversible'|trans({}, 'UserGroup') }}.</p>
                                     <p>{{ 'Do you want to proceed?'|trans({}, 'UserGroup') }}</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-danger">{{ 'Yes'|trans({}, 'UserGroup') }}</button>
-                                    <button class="btn btn-default" data-dismiss="modal">{{ 'No'|trans({}, 'UserGroup') }}</button>
+                                    <button class="btn btn-default"
+                                            data-dismiss="modal">{{ 'No'|trans({}, 'UserGroup') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -56,24 +63,24 @@
             <div class="box-body">
                 <table class="table table-hover record_properties">
                     <tbody>
-                        <tr>
-                            <th scope="row">{{'Id'|trans({}, 'UserGroup')}}</th>
-                            <td>{{ usergroup.id }}</td>
-                            <tr>
-                                <th scope="row">{{'Name'|trans({}, 'UserGroup')}}</th>
-                                <td>
-                                    {{ usergroup.name }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">{{'Roles'|trans({}, 'UserGroup')}}</th>
-                                <td>
-                                    {% for item in usergroup.roles %}
-                                        {{item}},
-                                {% endfor %}
-                            </tr>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th scope="row">{{ 'Id'|trans({}, 'UserGroup') }}</th>
+                        <td>{{ usergroup.id }}</td>
+                    <tr>
+                        <th scope="row">{{ 'Name'|trans({}, 'UserGroup') }}</th>
+                        <td>
+                            {{ usergroup.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Roles'|trans({}, 'UserGroup') }}</th>
+                        <td>
+                            {% for item in usergroup.roles %}
+                                {{ item }},
+                            {% endfor %}
+                    </tr>
+                    </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -81,7 +88,7 @@
 
             </div>
         </div>
-    
+
     </section>
 
 {% endblock %}

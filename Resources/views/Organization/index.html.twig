@@ -21,13 +21,21 @@
 
 {% from _self import thead %}
 
+{% block app_menu %}
+    {{ include("FlowerUserBundle::appnav.html.twig", { 'app_employee': true }) }}
+{% endblock %}
+
 
 {% block body %}
+    <section class="content-header">
+        <h1>
+            {{ organization_settings.getValue('organization_title') }}
+        </h1>
+    </section>
     <section class="content">
-        {{ include("FlowerUserBundle::appnav.html.twig", { 'app_employee': true }) }}
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{ organization_settings.getValue('organization_title') }}</h3>
+                <h3 class="box-title"></h3>
                 <div class="box-tools pull-right">
                 </div>
             </div>

@@ -2,10 +2,14 @@
 
 {% block title %}User - {{ parent() }}{% endblock %}
 
+
+{% block app_menu %}
+    {{ include("FlowerCoreBundle:Default:admin_nav.html.twig") }}
+{% endblock %}
+
 {% block body %}
     <section class="content-header">
-        {% include 'FlowerCoreBundle:Default:admin_nav.html.twig' %}
-        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans}}</a>
+        <h1><a href="{{ path('admin_dash') }}"> {{ 'Settings'|trans }}</a>
             /
             <a href={{ path('user') }}>
                 {{ '%entity% list'|trans({'%entity%': 'User'}, 'User') }}
@@ -14,7 +18,7 @@
             {{ '%entity%'|trans({'%entity%': 'User'}, 'User') }}
         </h1>
     </section>
-    <section class="content">    
+    <section class="content">
         <div class="box">
             <div class="box-header">
                 <div class="box-tools">
@@ -37,16 +41,19 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
                                     <h3>{{ 'Confirm delete'|trans({}, 'User') }}</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <p>{{ 'You are about to delete an item'|trans({}, 'User') }}, {{ 'this procedure is irreversible'|trans({}, 'User') }}.</p>
+                                    <p>{{ 'You are about to delete an item'|trans({}, 'User') }}
+                                        , {{ 'this procedure is irreversible'|trans({}, 'User') }}.</p>
                                     <p>{{ 'Do you want to proceed?'|trans({}, 'User') }}</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-danger">{{ 'Yes'|trans({}, 'User') }}</button>
-                                    <button class="btn btn-default" data-dismiss="modal">{{ 'No'|trans({}, 'User') }}</button>
+                                    <button class="btn btn-default"
+                                            data-dismiss="modal">{{ 'No'|trans({}, 'User') }}</button>
                                 </div>
                             </div>
                         </div>
@@ -56,54 +63,55 @@
             <div class="box-body">
                 <table class="table table-hover record_properties">
                     <tbody>
-                        <tr>
-                            <th scope="row">{{'Id'|trans({}, 'User')}}</th>
-                            <td>{{ user.id }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Firstname'|trans({}, 'User')}}</th>
-                            <td>{{ user.firstname }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Lastname'|trans({}, 'User')}}</th>
-                            <td>{{ user.lastname }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Email'|trans({}, 'User')}}</th>
-                            <td>{{ user.email }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Username'|trans({}, 'User')}}</th>
-                            <td>{{ user.username }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Initials'|trans({}, 'User')}}</th>
-                            <td>{{ user.initials }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Created'|trans({}, 'User')}}</th>
-                            <td>{{ user.created|date('fullDateTime'|trans) }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Updated'|trans({}, 'User')}}</th>
-                            <td>{{ user.updated|date('fullDateTime'|trans) }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Lastlogin'|trans({}, 'User')}}</th>
-                            <td>{{ user.lastLogin|date('fullDateTime'|trans) }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Enabled'|trans({}, 'User')}}</th>
-                            <td>{% if user.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">{{'Groups'|trans({}, 'User')}}</th>
-                            <td>
-                                {% for group in user.groups %}
-                                        {{group.name}},
-                                {% endfor %}
-                            </td>
-                        </tr>
+                    <tr>
+                        <th scope="row">{{ 'Id'|trans({}, 'User') }}</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Firstname'|trans({}, 'User') }}</th>
+                        <td>{{ user.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Lastname'|trans({}, 'User') }}</th>
+                        <td>{{ user.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Email'|trans({}, 'User') }}</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Username'|trans({}, 'User') }}</th>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Initials'|trans({}, 'User') }}</th>
+                        <td>{{ user.initials }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Created'|trans({}, 'User') }}</th>
+                        <td>{{ user.created|date('fullDateTime'|trans) }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Updated'|trans({}, 'User') }}</th>
+                        <td>{{ user.updated|date('fullDateTime'|trans) }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Lastlogin'|trans({}, 'User') }}</th>
+                        <td>{{ user.lastLogin|date('fullDateTime'|trans) }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Enabled'|trans({}, 'User') }}</th>
+                        <td>{% if user.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
+                                    class="fa fa-square-o"></i>{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{{ 'Groups'|trans({}, 'User') }}</th>
+                        <td>
+                            {% for group in user.groups %}
+                                {{ group.name }},
+                            {% endfor %}
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -111,7 +119,7 @@
 
             </div>
         </div>
-    
+
     </section>
 
 {% endblock %}

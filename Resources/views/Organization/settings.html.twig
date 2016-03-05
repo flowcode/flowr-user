@@ -1,11 +1,20 @@
 {% extends "FlowerCoreBundle::layout.html.twig" %}
 
+
+{% block app_menu %}
+    {{ include("FlowerUserBundle::appnav.html.twig", { 'app_settings': true }) }}
+{% endblock %}
+
 {% block body %}
+    <section class="content-header">
+        <h1>
+            {{ organization_settings.getValue('organization_title') }}
+        </h1>
+    </section>
     <section class="content">
-        {{ include("FlowerUserBundle::appnav.html.twig", { 'app_settings': true }) }}
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title"></h3>
+                <h3 class="box-title">{{ 'settings'|trans|title }}</h3>
                 <div class="box-tools pull-right">
                 </div>
             </div>
@@ -71,8 +80,7 @@
             var formData = new FormData($(this).serialize());
             formData.append("id", $(this).attr('data-id'));
             formData.append("type", $(this).attr('data-type'));
-            $.each(files, function(key, value)
-            {
+            $.each(files, function (key, value) {
                 formData.append(key, value);
             });
 

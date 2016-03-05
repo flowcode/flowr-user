@@ -1,8 +1,17 @@
-<div class="nav-app">
-    <ul class="nav nav-tabs ">
-        <li role="presentation" class="app-icon">
-            <img src="{{ asset('bundles/flowercore/images/icons/Organization-100.png') }}" class="img-responsive">
-        </li>
+<section class="sidebar">
+    <div class="app-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="{{ asset('bundles/flowercore/images/icons/Organization-100.png') }}"
+                     class="img-responsive pull-left" width="40">
+                <span>
+                    {{ 'organization'|trans({}, 'User')|title }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <ul class="sidebar-menu">
+
         <li role="presentation" {% if app_employee is defined %}class="active"{% endif %}>
             <a href="{{ path('employee') }}">{{ 'organization'|trans({}, 'User')|title }}</a>
         </li>
@@ -12,4 +21,4 @@
             </li>
         {% endif %}
     </ul>
-</div>
+</section>
