@@ -1,3 +1,7 @@
+flower_api_user_get_availables:
+    path:     /available
+    defaults: { _controller: FlowerUserBundle:Api/User:findAvailables }
+    methods: [GET]
 
 flower_api_user_notifications_setviewed:
     path:     /notifications/{id}/viewed
