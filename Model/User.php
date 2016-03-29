@@ -31,7 +31,7 @@ abstract class User extends BaseUser
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"kanban", "full"})
+     * @Groups({"kanban", "full", "public"})
      */
     protected $id;
 
@@ -39,7 +39,7 @@ abstract class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="initials", type="string", length=255, nullable=true)
-     * @Groups({"kanban", "full"})
+     * @Groups({"kanban", "full", "public"})
      */
     protected $initials;
 
@@ -47,7 +47,7 @@ abstract class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
-     * @Groups({"kanban", "full"})
+     * @Groups({"kanban", "full", "public"})
      */
     protected $avatar;
 
@@ -55,7 +55,7 @@ abstract class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
-     * @Groups({"kanban", "full"})
+     * @Groups({"kanban", "full", "public"})
      */
     protected $firstname;
 
@@ -63,7 +63,7 @@ abstract class User extends BaseUser
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
-     * @Groups({"kanban", "full"})
+     * @Groups({"kanban", "full", "public"})
      */
     protected $lastname;
 

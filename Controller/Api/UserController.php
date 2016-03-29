@@ -19,4 +19,32 @@ class UserController extends FOSRestController
         $view->getSerializationContext()->setGroups(array('kanban'));
         return $this->handleView($view);
     }
+
+
+    public function getProfileAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $limit = 10;
+        $page = 0;
+        $today = new \DateTime();
+        $today->sub(new \DateInterval('PT1H'));
+        $tomorrow = new \DateTime('tomorrow');
+        $tomorrow2 = new \DateTime('tomorrow');
+        $tomorrow2->add(new \DateInterval('P1D'));
+        $eventtoday = $em->getRepository('FlowerModelBundle:Planner\Event')->findByStartDate($this->getUser(), $today, $tomorrow, $limit, $page * $limit);
+        $eventstomorrow = $em->getRepository('FlowerModelBundle:Planner\Event')->findByStartDate($this->getUser(), $tomorrow, $tomorrow2, $limit, $page * $limit);
+
+        $userArr = array(
+            "happyname" => $user->getHappyName(),
+            "avatarUrl" => $user->getAvatar(),
+            "eventstoday" => $eventtoday,
+            "eventstomorrow" => $eventstomorrow,
+        );
+
+        $view = FOSView::create($userArr, Codes::HTTP_OK)->setFormat('json');
+        $view->getSerializationContext()->setGroups(array('public', 'api'));
+        return $this->handleView($view);
+    }
 }

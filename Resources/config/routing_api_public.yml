@@ -2,3 +2,8 @@ flower_user_api_login:
     path:     /login
     defaults: { _controller: FlowerUserBundle:Api/Login:login }
     methods: [POST]
+
+flower_user_api_profile:
+    path:     /profile
+    defaults: { _controller: FlowerUserBundle:Api/User:getProfile }
+    methods: [GET]
