@@ -7,7 +7,7 @@
             <a class="username" href="{{ path('user_profile_public', {'username':activity.user.username}) }}">
                 {{ activity.user|title }}
             </a>
-            <span class="date">{{ activity.changedOn|date('Y/m/d H:i') }}</span>
+            <span class="date">{{ activity.changedOn|date('fullDateTime' | trans) }}</span>
         </div>
         <div>
             {% if activity.type == 'project' %}
