@@ -65,6 +65,7 @@ class ProfileController extends Controller
         }
 
         return array(
+            'user' => $user,
             'external' => $external,
             'size' => $size,
             'avatarUrl' => $avatarUrl,

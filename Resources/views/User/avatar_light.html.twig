@@ -1,0 +1,5 @@
+{% if user.avatar %}
+    <img src="{{ user.avatar }}" class="img-circle" alt="{{ user.getHappyName }}" title="{{ user.getHappyName }}" />
+{% else %}
+    <img src="http://dummyimage.com/100/ffffff/000&text={{ user.initials }}" class="img-circle" alt="{{ user.getHappyName }}" title="{{ user.getHappyName }}" />
+{% endif %}
