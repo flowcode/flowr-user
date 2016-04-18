@@ -96,6 +96,7 @@ class UserController extends Controller
 
             $securityGroup = new SecurityGroup();
             $securityGroup->setName($user->getUsername());
+            $securityGroup->setAssignee($user);
             $user->addSecurityGroup($securityGroup);
 
             $em->persist($securityGroup);
