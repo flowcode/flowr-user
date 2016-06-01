@@ -47,6 +47,31 @@
                 </div>
             </div>
             <div class="box-body">
+                <div class="">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input name="q" class="form-control input-xlarge" type="text" value="{{ filter.q }}" id="product-query"
+                                   placeholder="Buscar">
+                        </div>
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i> {{ 'search'|trans|title }}
+                        </button>
+
+                        <a class="btn btn-default btn-sm" href="{{ path('user') }}?reset">
+                            <i class="fa fa-times"></i> {{ 'clean' | trans | capitalize }}
+                        </a>
+
+                        <br>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" {% if filter.is_enabled %}checked{% endif %}
+                                           name="is_enabled"> {{ 'Enabled'|trans({}, 'Product') }}
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <table class="table table-hover records_list table-condensed">
                     <thead>
                     <tr>

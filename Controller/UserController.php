@@ -31,13 +31,30 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $filter = array(
+            'q' => $request->get('q'),
+            'is_enabled' => $request->get('is_enabled', true),
+        );
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('FlowerModelBundle:User\User')->createQueryBuilder('u');
+        if ($filter['q']) {
+            $qb->andWhere('(u.username LIKE :username OR u.email LIKE :username OR u.email LIKE :username OR u.firstname LIKE :username OR u.lastname LIKE :username)')->setParameter('username', '%' . $filter['q'] . '%');
+        }
+
+        if ($filter['is_enabled']) {
+            $enabled = true;
+            if ($filter['is_enabled'] === 'off') {
+                $enabled = false;
+            }
+            $qb->andWhere('u.enabled = :is_enabled')->setParameter('is_enabled', $enabled);
+        }
+
         $this->addQueryBuilderSort($qb, 'user');
         $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
 
         return array(
             'paginator' => $paginator,
+            'filter' => $filter,
         );
     }
 
@@ -178,9 +195,9 @@ class UserController extends Controller
     }
 
     /**
-     * @param string $name  session name
+     * @param string $name session name
      * @param string $field field name
-     * @param string $type  sort type ("ASC"/"DESC")
+     * @param string $type sort type ("ASC"/"DESC")
      */
     protected function setOrder($name, $field, $type = 'ASC')
     {
@@ -200,7 +217,7 @@ class UserController extends Controller
 
     /**
      * @param QueryBuilder $qb
-     * @param string       $name
+     * @param string $name
      */
     protected function addQueryBuilderSort(QueryBuilder $qb, $name)
     {
@@ -231,19 +248,17 @@ class UserController extends Controller
     /**
      * Create Delete form
      *
-     * @param integer                       $id
-     * @param string                        $route
+     * @param integer $id
+     * @param string $route
      * @return Form
      */
     protected function createDeleteForm($id, $route)
     {
         return $this->createFormBuilder(null, array('attr' => array('id' => 'delete')))
-                        ->setAction($this->generateUrl($route, array('id' => $id)))
-                        ->setMethod('DELETE')
-                        ->getForm()
-        ;
+            ->setAction($this->generateUrl($route, array('id' => $id)))
+            ->setMethod('DELETE')
+            ->getForm();
     }
-
 
 
     /**
