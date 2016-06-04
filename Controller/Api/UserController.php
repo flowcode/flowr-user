@@ -2,6 +2,7 @@
 
 namespace Flower\UserBundle\Controller\Api;
 
+use Flower\ModelBundle\Entity\Board\TaskStatus;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
@@ -26,6 +27,10 @@ class UserController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
+        $taskRepo = $em->getRepository('FlowerModelBundle:Board\Task');
+        $taskStatusTodo = $em->getRepository('FlowerModelBundle:Board\TaskStatus')->findOneBy(array("name" => TaskStatus::STATUS_TODO));
+        $taskStatusDoing = $em->getRepository('FlowerModelBundle:Board\TaskStatus')->findOneBy(array("name" => TaskStatus::STATUS_DOING));
+
         $limit = 10;
         $page = 0;
         $today = new \DateTime();
@@ -36,11 +41,17 @@ class UserController extends FOSRestController
         $eventtoday = $em->getRepository('FlowerModelBundle:Planner\Event')->findByStartDate($this->getUser(), $today, $tomorrow, $limit, $page * $limit);
         $eventstomorrow = $em->getRepository('FlowerModelBundle:Planner\Event')->findByStartDate($this->getUser(), $tomorrow, $tomorrow2, $limit, $page * $limit);
 
+        $statuses = array($taskStatusTodo->getId(), $taskStatusDoing->getId());
+        $assigneeId = $this->getUser()->getId();
+        $limit = 5;
+        $myTasks = $taskRepo->findByStatusByPos($statuses, null, $assigneeId, $limit);
+
         $userArr = array(
             "happyname" => $user->getHappyName(),
             "avatarUrl" => $user->getAvatar(),
             "eventstoday" => $eventtoday,
             "eventstomorrow" => $eventstomorrow,
+            "myTasks" => $myTasks,
         );
 
         $view = FOSView::create($userArr, Codes::HTTP_OK)->setFormat('json');
